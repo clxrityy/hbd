@@ -1,0 +1,49 @@
+{
+  "name": "ai-discord-bot",
+  "version": "1.0.0",
+  "description": "An AI Discord bot template",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "start:dev": "ts-node-dev src/index.ts",
+    "start:prod": "node dist/index.js",
+    "dev": "nodemon ./src/index.ts",
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "keywords": [
+    "mongodb",
+    "mongoose",
+    "typescript",
+    "discord.js",
+    "openai",
+    "ai",
+    "express"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clxrityy/ai-discord-bot"
+  },
+  "bugs": {
+    "url": "https://github.com/clxrityy/ai-discord-bot/issues"
+  },
+  "homepage": "https://github.com/clxrityy/ai-discord-bot#readme",
+  "author": {
+    "name": "MJ Anglin",
+    "url": "https://www.mjanglin.com",
+    "email": "contact@mjanglin.com"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.4.4",
+    "mongoose": "^8.1.2",
+    "nodemon": "^3.0.3",
+    "openai": "^4.28.0"
+  }
+}
