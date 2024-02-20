@@ -12,6 +12,10 @@ const client = new Client({
     ] // Specify all the intents you wish your bot to access
 });
 
-eventHandler(client) // Register events
+eventHandler(client); // Register events
+
+const date = new Date()
+
+client.emit("interval")
 
 client.login(process.env.BOT_TOKEN!); // Login to the bot

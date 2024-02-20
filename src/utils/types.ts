@@ -6,6 +6,7 @@ export type SlashCommand = {
     userPermissions: Array<bigint>;
     botPermissions: Array<bigint>;
     run: (client: Client, interaction: ChatInputCommandInteraction) => Promise<any>;
+    deleted?: boolean;
 }
 
 export type Config = {

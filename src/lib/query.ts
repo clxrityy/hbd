@@ -1,10 +1,7 @@
-import openai from "./openai";
+/* import openai from "./openai";
 import config from "../config";
-import guild from "../models/guild";
+import guild from "../models/Guild";
 
-/*
-    a sleep function to make sure the AI gets a good night's rest before it has to get back to work
-*/
 function sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -55,4 +52,4 @@ const query = async (prompt: string, guildId: string) => {
     return res;
 }
 
-export default query;
+export default query; */

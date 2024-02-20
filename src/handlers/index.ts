@@ -19,7 +19,7 @@ const eventHandler = (client: Client) => {
                 const eventFunction = require(eventFile);
                 await eventFunction(client, args);
             }
-        })
+        });
     }
 }
 

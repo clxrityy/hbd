@@ -10,7 +10,7 @@ const config: Config = {
     colors: {
         error: "#e35f58",
         success: "#55cf6f",
-        primary: "#55a8cf"
+        primary: "#71b8e1"
     }
 }
 
