@@ -3,7 +3,7 @@ import { Schema, model } from "mongoose";
 const birthdaySchema = new Schema({
     GuildID: String,
     UserID: String,
-    Birthday: Date || Number,
+    Birthday: String,
 },
     {
     strict: false

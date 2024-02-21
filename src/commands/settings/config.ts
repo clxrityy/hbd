@@ -79,6 +79,8 @@ const config: SlashCommand = {
             guildData = new Guild({
                 GuildID: guildId
             });
+
+            await guildData.save();
         }
 
         const embed = new EmbedBuilder()
