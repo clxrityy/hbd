@@ -2,7 +2,7 @@ import { ApplicationCommand } from "discord.js";
 import { SlashCommand } from "./types";
 
 const commandCompare = (existing: ApplicationCommand, local: SlashCommand) => {
-    const changed = (a, b) => JSON.stringify(a) !== JSON.stringify(b);
+    const changed = (a: string, b: string) => JSON.stringify(a) !== JSON.stringify(b);
 
     if (changed(existing.name, local.data.name) || changed(existing.description, local.data.description)) {
         return true;

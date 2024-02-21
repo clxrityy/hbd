@@ -6,7 +6,7 @@ const birthdaySchema = new Schema({
     Birthday: Date || Number,
 },
     {
-    strict: true
+    strict: false
     });
 
 export default model("Birthday", birthdaySchema);

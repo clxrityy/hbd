@@ -1,8 +1,7 @@
-import { ChatInputCommandInteraction, Client, ColorResolvable, RESTPostAPIChatInputApplicationCommandsJSONBody, SlashCommandBuilder, SlashCommandSubcommandsOnlyBuilder } from "discord.js";
+import { ChatInputCommandInteraction, Client, ColorResolvable, RESTPostAPIChatInputApplicationCommandsJSONBody, SlashCommandBuilder, SlashCommandSubcommandGroupBuilder, SlashCommandSubcommandsOnlyBuilder } from "discord.js";
 
 export type SlashCommand = {
-    data: RESTPostAPIChatInputApplicationCommandsJSONBody | Omit<SlashCommandBuilder, "addSubcommandGroup" | "addSubcommand">
-    | SlashCommandSubcommandsOnlyBuilder;
+    data: RESTPostAPIChatInputApplicationCommandsJSONBody | SlashCommandBuilder | SlashCommandSubcommandsOnlyBuilder | SlashCommandSubcommandGroupBuilder | Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">
     userPermissions: Array<bigint>;
     botPermissions: Array<bigint>;
     run: (client: Client, interaction: ChatInputCommandInteraction) => Promise<any>;

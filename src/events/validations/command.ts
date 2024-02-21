@@ -19,7 +19,7 @@ module.exports = async (client: Client, interaction: CommandInteraction) => {
     
     for (const permission of commandObject.userPermissions || []) {
         if (!interaction.memberPermissions.has(permission)) {
-            const embed = createEmbed(config.colors.error, "You do not have permission to execute this command!");
+            const embed = createEmbed(config.colors.error as ColorResolvable, "You do not have permission to execute this command!");
 
             return await interaction.reply({ embeds: [embed], ephemeral: true });
         }
@@ -29,14 +29,14 @@ module.exports = async (client: Client, interaction: CommandInteraction) => {
 
     for (const permission of commandObject.botPermissions || []) {
         if (!bot.permissions.has(permission)) {
-            const embed = createEmbed(config.colors.error, "I don't have permission to execute this command!");
+            const embed = createEmbed(config.colors.error as ColorResolvable, "I don't have permission to execute this command!");
 
             return await interaction.reply({ embeds: [embed], ephemeral: true });
         }
     }
 
     try {
-        await commandObject.run(client, interaction);
+        await commandObject.run(client, interaction)
     } catch (err) {
         console.log(`[ERROR] An error occured while validating commands!\n ${err}`.red);
         console.error(err);
