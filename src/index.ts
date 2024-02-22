@@ -9,14 +9,13 @@ const client = new Client({
         GatewayIntentBits.Guilds,
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.GuildPresences
+        GatewayIntentBits.GuildPresences,
+        GatewayIntentBits.MessageContent
     ] // Specify all the intents you wish your bot to access
 });
 
 eventHandler(client); // Register events
 
 
-client.emit("interval")
 
-
-client.login(process.env.BOT_TOKEN!); // Login to the bot
+client.login(process.env.BOT_TOKEN!).then(() => client.emit("interval")) // Login to the bot

@@ -22,9 +22,9 @@ module.exports = async (client: Client, ...args: string[]) => {
     }
     let channel: TextChannel;
 
-    const announceChannelId = guildData.AnnouncementChannel;
+    const announceChannelId = guildData.AnnouncementChannel!;
 
-    channel.id = announceChannelId;
+    channel = await (await (await client.guilds.fetch(guildId)).channels.fetch(announceChannelId)).fetch() as TextChannel
 
     const embed = new EmbedBuilder()
         .setTitle("hbd! 🎉")
