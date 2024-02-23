@@ -1,7 +1,7 @@
 {
-  "name": "ai-discord-bot",
+  "name": "hbd",
   "version": "1.0.0",
-  "description": "An AI Discord bot template",
+  "description": "A Discord birthday bot",
   "main": "index.js",
   "scripts": {
     "start": "ts-node src/index.ts",
@@ -18,16 +18,20 @@
     "discord.js",
     "openai",
     "ai",
-    "express"
+    "express",
+    "interval",
+    "automation",
+    "bot",
+    "birthday"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/clxrityy/ai-discord-bot"
+    "url": "git+https://github.com/clxrityy/hbd"
   },
   "bugs": {
-    "url": "https://github.com/clxrityy/ai-discord-bot/issues"
+    "url": "https://github.com/clxrityy/hbd/issues"
   },
-  "homepage": "https://github.com/clxrityy/ai-discord-bot#readme",
+  "homepage": "https://github.com/clxrityy/hbd#readme",
   "author": {
     "name": "MJ Anglin",
     "url": "https://www.mjanglin.com",
