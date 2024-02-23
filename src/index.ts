@@ -19,3 +19,5 @@ eventHandler(client); // Register events
 
 
 client.login(process.env.BOT_TOKEN!).then(() => client.emit("interval")) // Login to the bot
+
+export default client;

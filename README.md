@@ -25,6 +25,16 @@ a discord birthday bot
 
 ---
 
+## commands
+
+- `/birthday set {month} {day}`
+    - can only be set once
+- `/birthday view {user}`
+    - view an (optional) target user's birthday
+    - with no user option specified, will show your own
+
+---
+
 ## how it works
 
 - guild & user data is stored in mongoose [models](https://mongoosejs.com/docs/models.html)
@@ -82,19 +92,26 @@ module.exports = (client: Client) => {
 
 ---
 
-## TO-DO →
+## TODO →
 
 #### functionality
-- add configuration for multiple birthdays
-- add configuration for giving the *birthday* role
+- [ ] add configuration for multiple birthdays
+- [ ] add configuration for giving the *birthday* role
     - and removing once the day is over
-- add the ability for guild admins to configure the *"happy birthday"* message/embed
+- [ ] add the ability for guild admins to configure the *"happy birthday"* message/embed
+- [ ] add the abiltiy for guild admins to change birthdays
+    - and/or change settings to allow people to change theirs
+- [ ] add the ability to configure only a certain role(s) to be able to set their birthday
+- [ ] add a command to list birthdays (all or by month/day)
+
 
 #### misc (?)
-- zodiac sign commands
-    - see other guild members who are your sign
-- wish users happy birthday
+- [ ] zodiac sign commands(?)
+    - see what sign users are
+    - horoscope
+    - etc.
+- [ ] wish users happy birthday
     - only available on a person's birthday
     - `/wish {user} {message}`
     - `/wishes` - can view any time
-- option to have unique AI generated messages to wish people happy birthday
+- [ ] option to have unique AI generated messages to wish people happy birthday

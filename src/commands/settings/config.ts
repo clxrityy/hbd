@@ -62,7 +62,8 @@ const config: SlashCommand = {
                     .setRequired(true)
                 )
             )
-        ).toJSON(),
+    )
+        .toJSON(),
     botPermissions: [],
     userPermissions: [PermissionsBitField.Flags.Administrator],
     run: async (client, interaction) => {

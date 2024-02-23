@@ -31,14 +31,10 @@ module.exports = async (client: Client, ...args: string[]) => {
     channel = await (await (await client.guilds.fetch(guildId)).channels.fetch(announceChannelId)).fetch() as TextChannel
 
     const embed = new EmbedBuilder()
-        .setTitle("hbd! 🎉")
+        .setTitle(Config.messages.happyBirthday.title)
         .setDescription(`Happy birthday to <@!${userId}>!`)
         .setColor(Config.colors.primary as ColorResolvable)
-        .setTimestamp()
-        .setFooter({
-            text: `/birthday set`,
-            iconURL: client.user.avatarURL()
-        });
+        .setFooter(Config.messages.happyBirthday.footer);
     
     return await channel.send({ embeds: [embed] });
 }

@@ -8,16 +8,46 @@ export type SlashCommand = {
     deleted?: boolean;
 }
 
+type Field = {
+    name: string;
+    value: string;
+    inline?: boolean;
+}
+
+export interface Embed {
+    title?: string;
+    url?: string;
+    description?: string;
+    image?: string;
+    thumbnail?: string;
+    timestamp?: boolean | Date;
+    author?: {
+        name?: string;
+        iconURL?: string;
+        url?: string;
+    };
+    footer?: {
+        text: string;
+        iconURL?: string;
+    },
+    fields?: Field[];
+    color?: string | ColorResolvable;
+}
+
 export type Config = {
-    openai: {
+    client: Client;
+    openai?: {
         model: string;
         systemRoleContent: string;
         temperature: number;
         presence_penalty: number;
     },
-    colors: {
-        error: string | ColorResolvable;
-        success: string | ColorResolvable;
-        primary: string | ColorResolvable;
+    colors?: {
+        error?: string | ColorResolvable;
+        success?: string | ColorResolvable;
+        primary?: string | ColorResolvable;
+    },
+    messages: {
+        happyBirthday: Embed;
     }
 }
