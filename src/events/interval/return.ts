@@ -17,8 +17,6 @@ module.exports = (client: Client) => {
 
             if (birthday.Birthday === dateParsed) {
                 client.emit("birthday", birthday.UserID);
-
-                console.log("working")
             } else {
                 return;
             }
