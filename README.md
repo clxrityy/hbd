@@ -1,4 +1,4 @@
-# hbd
+# hbd <img src="/assets/icon.png" style="width:40px">
 
 a discord birthday bot
 
@@ -82,7 +82,7 @@ module.exports = (client: Client) => {
 
 ---
 
-## TO-DO:
+## TO-DO →
 
 #### functionality
 - add configuration for multiple birthdays
@@ -97,3 +97,4 @@ module.exports = (client: Client) => {
     - only available on a person's birthday
     - `/wish {user} {message}`
     - `/wishes` - can view any time
+- option to have unique AI generated messages to wish people happy birthday
