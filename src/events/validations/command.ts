@@ -61,7 +61,7 @@ module.exports = async (client: Client, interaction: CommandInteraction) => {
     // developer commands
 
     if (config.commands.devCommands.includes(commandObject.data.name)) {
-        if (interaction.user.id != client.application.owner.id) {
+        if (!config.developerIds.includes(interaction.user.id)) {
 
             let embed = createEmbed(config.colors.error as ColorResolvable, "This command is only available to the bot's developers!\nIf there is an error/issue, please report it [**here**](https://github.com/clxrityy/hbd/issues/new).");
 

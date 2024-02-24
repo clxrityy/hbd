@@ -35,7 +35,7 @@ const birthday: SlashCommand = {
                 .setDescription("The user you'd like to view")
                 .setRequired(false)
             )
-    ),
+    ).toJSON(),
     userPermissions: [],
     botPermissions: [],
     run: async (client, interaction) => {

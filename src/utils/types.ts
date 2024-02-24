@@ -46,12 +46,14 @@ export type Config = {
         error?: string | ColorResolvable;
         success?: string | ColorResolvable;
         primary?: string | ColorResolvable;
+        secondary?: string | ColorResolvable;
     },
     messages: {
         happyBirthday: Embed;
-    }
+    },
     commands: {
         adminCommands: string[];
         devCommands: string[];
-    }
+    },
+    developerIds: string[]
 }

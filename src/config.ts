@@ -1,5 +1,6 @@
 import { Config } from "./utils/types";
 import client from ".";
+import { ColorResolvable } from "discord.js";
 
 const config: Config = {
     client: client,
@@ -12,7 +13,7 @@ const config: Config = {
     colors: {
         error: "#e35f58",
         success: "#55cf6f",
-        primary: "#71b8e1"
+        primary: "#ffffff",
     },
     messages: {
         happyBirthday: {
@@ -26,8 +27,9 @@ const config: Config = {
     },
     commands: {
         adminCommands: ["config"],
-        devCommands: ["avatar"]
-    }
+        devCommands: ["bot"]
+    },
+    developerIds: ['244304391815823361', '706976863096143936']
 }
 
 export default config;
