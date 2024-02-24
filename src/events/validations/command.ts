@@ -3,10 +3,15 @@ import { Client, ColorResolvable, CommandInteraction, EmbedBuilder } from "disco
 import { getLocalCommands } from "../../utils/getCommands";
 import { SlashCommand } from "../../utils/types";
 import config from "../../config";
+import Guild from "../../models/Guild";
 
 module.exports = async (client: Client, interaction: CommandInteraction) => {
 
     if (!interaction.isChatInputCommand()) return;
+
+    const { guildId, channelId } = interaction;
+
+    let guildData = await Guild.findOne({ GuildID: guildId });
 
     const localCommands = getLocalCommands();
     const commandObject: SlashCommand = localCommands.find((cmd: SlashCommand) => cmd.data.name === interaction.commandName);
@@ -36,7 +41,19 @@ module.exports = async (client: Client, interaction: CommandInteraction) => {
     }
 
     try {
-        await commandObject.run(client, interaction)
+
+        if (!guildData.CommandsChannel) {
+            await commandObject.run(client, interaction)
+        } else {
+            if (guildData.CommandsChannel === channelId) {
+                await commandObject.run(client, interaction);
+            } else {
+                const embed = createEmbed(config.colors.error as ColorResolvable, `You tried to execute a command, but my commands can only be executed in <#${guildData.CommandsChannel}>`);
+    
+                (await interaction.user.createDM()).send({ embeds: [embed] });
+            }
+        }
+        
     } catch (err) {
         console.log(`[ERROR] An error occured while validating commands!\n ${err}`.red);
         console.error(err);

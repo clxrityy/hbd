@@ -37,6 +37,10 @@ const config: SlashCommand = {
                     .setRequired(true)
                 )
             )
+            .addSubcommand((sub) => sub
+                .setName("reset")
+                .setDescription("Reset channel settings")
+            )
         )
         // roles
         .addSubcommandGroup((group) => group
@@ -62,7 +66,11 @@ const config: SlashCommand = {
                     .setRequired(true)
                 )
             )
-    )
+            .addSubcommand((sub) => sub
+                .setName("reset")
+                .setDescription("Reset role settings")
+            )
+        )
         .toJSON(),
     botPermissions: [],
     userPermissions: [PermissionsBitField.Flags.Administrator],
@@ -176,7 +184,7 @@ const config: SlashCommand = {
                                     name: interaction.user.displayName,
                                     iconURL: interaction.user.avatarURL()
                                 });
-                            
+
                             return await interaction.reply({ embeds: [embed] });
 
                         } catch (err) {
@@ -187,13 +195,37 @@ const config: SlashCommand = {
 
                             return await interaction.reply({ embeds: [embed], ephemeral: true });
                         }
+                    // reset
+                    case "reset":
+
+                        try {
+                            await guildData.updateOne({
+                                AnnouncementChannel: undefined,
+                                CommandsChannel: undefined,
+                            });
+
+                            embed
+                                .setDescription(`Successfully reset channel configurations!`)
+                                .setColor(Config.colors.success as ColorResolvable)
+                                .setFooter({
+                                    text: "/config view",
+                                    iconURL: client.user.avatarURL()
+                                });
+
+                            return await interaction.reply({ embeds: [embed] });
+                        } catch (err) {
+                            console.log(`${err}`.red)
+                            embed
+                                .setColor(Config.colors.error as ColorResolvable)
+                                .setDescription(`**Error resetting channel settings!**\n\n\`${err}\``);
+                        }
                     default:
                         break;
                 }
-            
+
             // roles
             case "roles":
-                
+
                 let role: NonNullable<Role | APIRole>;
 
                 // roles sub commands
@@ -259,6 +291,31 @@ const config: SlashCommand = {
 
                             return await interaction.reply({ embeds: [embed], ephemeral: true });
                         }
+                    // reset
+                    case "reset":
+                        try {
+                            await guildData.updateOne({
+                                AdminRole: undefined,
+                                BirthdayRole: undefined,
+                            });
+
+                            embed
+                                .setDescription(`Successfully reset role configurations!`)
+                                .setColor(Config.colors.success as ColorResolvable)
+                                .setFooter({
+                                    text: "/config view",
+                                    iconURL: client.user.avatarURL()
+                                });
+
+                            return await interaction.reply({ embeds: [embed] });
+                        } catch (err) {
+                            console.log(`${err}`.red)
+                            embed
+                                .setColor(Config.colors.error as ColorResolvable)
+                                .setDescription(`**Error resetting role settings!**\n\n\`${err}\``);
+                        }
+                    default:
+                        break;
                 }
         }
     },

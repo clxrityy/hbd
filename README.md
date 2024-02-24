@@ -95,6 +95,8 @@ module.exports = (client: Client) => {
 ## TODO →
 
 #### functionality
+- [x] make it so commands only work in the command channel(s)
+    - [ ] also so that there can be mulitple command channels
 - [ ] add configuration for multiple birthdays
 - [ ] add configuration for giving the *birthday* role
     - and removing once the day is over
