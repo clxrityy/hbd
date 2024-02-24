@@ -24,6 +24,9 @@ const config: Config = {
             }
         },
     },
+    adminCommands: [
+        "config"
+    ]
 }
 
 export default config;

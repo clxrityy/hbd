@@ -16,7 +16,7 @@ module.exports = (client: Client) => {
         for (const birthday of birthdays) {
 
             if (birthday.Birthday === dateParsed) {
-                client.emit("birthday", birthday.UserID);
+                client.emit("birthday", [birthday.UserID, birthday.GuildID]);
             } else {
                 return;
             }

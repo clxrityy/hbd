@@ -9,7 +9,7 @@ module.exports = async (client: Client, interaction: CommandInteraction) => {
 
     if (!interaction.isChatInputCommand()) return;
 
-    const { guildId, channelId } = interaction;
+    const { guildId, channelId, guild } = interaction;
 
     let guildData = await Guild.findOne({ GuildID: guildId });
 
@@ -40,8 +40,19 @@ module.exports = async (client: Client, interaction: CommandInteraction) => {
         }
     }
 
-    try {
+    if (config.adminCommands.includes(commandObject.data.name) && guildData.AdminRole) {
+        guild.roles.cache.forEach((role) => {
+            if (role.id === guildData.AdminRole) {
+                role.members.forEach(async (member) => {
+                    if (member === interaction.member) {
+                        await commandObject.run(client, interaction);
+                    }
+                })
+            }
+        })
+    }
 
+    try {
         if (!guildData.CommandsChannel) {
             await commandObject.run(client, interaction)
         } else {

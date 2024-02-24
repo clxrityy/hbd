@@ -50,4 +50,5 @@ export type Config = {
     messages: {
         happyBirthday: Embed;
     }
+    adminCommands: string[];
 }

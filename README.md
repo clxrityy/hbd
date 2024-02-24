@@ -19,6 +19,7 @@ a discord birthday bot
 `/config roles`
 
 - `birthday_role`: the role users get on their birthday
+    - make sure the bot's role position is higher, otherwise the bot will not have permission to manage this role.
 - `admin_role`: the role that can configure birthday settings
 
 > by default both are nothing
@@ -98,11 +99,12 @@ module.exports = (client: Client) => {
 - [x] make it so commands only work in the command channel(s)
     - [ ] also so that there can be mulitple command channels
 - [ ] add configuration for multiple birthdays
-- [ ] add configuration for giving the *birthday* role
-    - and removing once the day is over
+- [x] add configuration for giving the *birthday* role
+    - [x] and removing once the day is over
 - [ ] add the ability for guild admins to configure the *"happy birthday"* message/embed
 - [ ] add the abiltiy for guild admins to change birthdays
     - and/or change settings to allow people to change theirs
+        - certain role can update their birthday(?)
 - [ ] add the ability to configure only a certain role(s) to be able to set their birthday
 - [ ] add a command to list birthdays (all or by month/day)
 

@@ -5,7 +5,8 @@ import Config from "../../config";
 
 module.exports = async (client: Client, ...args: string[]) => {
 
-    const userId = args[0];
+    const userId = args[0][0];
+    
 
     const birthdayData = await Birthday.findOne({ UserID: userId });
 
