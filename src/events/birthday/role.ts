@@ -43,7 +43,7 @@ module.exports = async (client: Client, ...args: string[]) => {
         return;
     });
     try {
-        return await user.roles.add(birthdayRole).then((res) => console.log(res));
+        return await user.roles.add(birthdayRole);
     } catch (err) {
         console.log(`[ERROR] Error adding birthday role!\n${err}`.red);
     }
