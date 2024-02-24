@@ -24,9 +24,10 @@ const config: Config = {
             }
         },
     },
-    adminCommands: [
-        "config"
-    ]
+    commands: {
+        adminCommands: ["config"],
+        devCommands: ["avatar"]
+    }
 }
 
 export default config;
