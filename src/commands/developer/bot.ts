@@ -75,7 +75,7 @@ const bot: SlashCommand = {
                                 .setTimestamp()
                                 .setFooter({
                                     text: "See the console for errors"
-                                });
+                                })
                             
                             return await interaction.reply({ embeds: [embed], ephemeral: true });
                         }

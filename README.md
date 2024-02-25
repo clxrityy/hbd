@@ -1,4 +1,4 @@
-# hbd <img src="/assets/icon.png" style="width:40px">
+# hbd <img src="/assets/avatar.gif" style="width:40px">
 
 a discord birthday bot
 

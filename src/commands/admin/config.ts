@@ -71,6 +71,10 @@ const config: SlashCommand = {
                 .setDescription("Reset role settings")
             )
         )
+        .addSubcommandGroup((group) => group
+            .setName("general")
+            .setDescription("General role settings")
+        )
         .toJSON(),
     botPermissions: [],
     userPermissions: [PermissionsBitField.Flags.Administrator],
