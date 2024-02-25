@@ -6,44 +6,7 @@ a discord birthday bot
 
 ---
 
-## configuration
-
-- #### `/config`
-
-##### set channels:
-
-`/config channels`
-
-- `announcement_channel`: the channel for birthdays to be announced in
-- `command_channel`: the channel for commands
-- **`reset`**: **reset the channel settings**
-
-> by default they will both be the default channel
-
-##### set roles:
-
-`/config roles`
-
-- `birthday_role`: the role users get on their birthday
-  - make sure the bot's role position is higher, otherwise the bot will not have permission to manage this role.
-- `admin_role`: the role that can configure birthday settings
-- **`reset`**: **reset the role settings**
-
-> by default both are nothing
-
----
-
-## commands
-
-- `/birthday set {month} {day}`
-  - can only be set once
-- `/birthday view {user}`
-  - view an (optional) target user's birthday
-  - with no user option specified, will show your own
-
----
-
-## how it works
+# `ℹ️` how it works
 
 - guild & user data is stored in mongoose [models](https://mongoosejs.com/docs/models.html)
 
@@ -86,7 +49,7 @@ module.exports = (client: Client) => {
 };
 ```
 
-#### [birthday event](./src/events/birthday/)
+### [birthday event](./src/events/birthday/)
 
 - fetches the channel to announce in and announces the birthday 
     - [🔗 `events/birthday/announce.ts`](./src/events/birthday/announce.ts)
@@ -124,7 +87,72 @@ try {
 
 ---
 
-## TODO →
+# `/` commands
+
+- [birthday](#birthday)
+- [admin](#admin)
+  - [edit](#edit)
+  - [config](#config)
+    - [view](#config-view)
+    - [channels](#channels)
+    - [roles](#roles)
+    - [general](#general)
+
+## birthday <img src="/assets/icon.png" style="width:25px">
+
+- `/birthday set {month} {day}`
+  - can only be set once
+- `/birthday view {user}`
+  - view an (optional) target user's birthday
+  - shows your own by default
+
+
+## admin <img src="/assets/admin.png" style="width:25px">
+- by default, only accessible to users with **Administrator** permissions
+  - otherwise, also accessible to users with the established [admin role](#roles)
+
+#### `/edit`
+
+- `/edit {user} {month} {day}`
+- change a user's birthday
+
+### config 
+
+#### `/config view`
+
+- view your guild's configurations
+
+#### channels:
+
+##### `/config channels`
+
+- `announcement_channel`— the channel for birthdays to be announced in
+- `command_channel` — the channel for commands
+- **`reset`** — **reset the channel settings**
+
+> by default they will both be the default channel
+
+#### roles:
+
+##### `/config roles`
+
+- `birthday_role` — the role users get on their birthday
+  - make sure the bot's role position is higher, otherwise the bot will not have permission to manage this role.
+- `admin_role` — the role that can configure birthday settings
+- **`reset`** — **reset the role settings**
+
+> by default both are nothing
+
+#### general
+
+##### `/config general`
+- `changeable` — whether or not user's can edit their own birthdays
+  - **true** or **false**
+  - by default only admins can edit birthdays
+
+---
+
+# `→` TODO
 
 #### functionality
 
@@ -151,3 +179,4 @@ try {
   - `/wish {user} {message}`
   - `/wishes` - can view any time
 - [ ] option to have unique AI generated messages to wish people happy birthday
+- [ ] option to change the guild name upon someone's birthday (kudos to good vibes)
