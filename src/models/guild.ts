@@ -6,6 +6,7 @@ const guildSchema = new Schema({
     CommandsChannel: String,
     AdminRole: String,
     BirthdayRole: String,
+    Changeable: Boolean,
 },
     { strict: false },
 );

@@ -73,11 +73,20 @@ const config: SlashCommand = {
         )
         .addSubcommandGroup((group) => group
             .setName("general")
-            .setDescription("General role settings")
+            .setDescription("General true/false guild settings")
+            .addSubcommand((sub) => sub
+                .setName("changeable")
+                .setDescription("Should all users be able to change their birthday?")
+                .addBooleanOption((option) => option
+                    .setName("yes")
+                    .setDescription("If false, only admins can edit user birthdays")
+                    .setRequired(true)
+                )
+            )
         )
         .toJSON(),
     botPermissions: [],
-    userPermissions: [PermissionsBitField.Flags.Administrator],
+    userPermissions: [],
     run: async (client, interaction) => {
 
         const { guild, guildId, options } = interaction;
@@ -112,11 +121,15 @@ const config: SlashCommand = {
                     .addFields(
                         {
                             name: "channels",
-                            value: `\`announcements\`: <#${guildData.AnnouncementChannel}>\n\`commands\`: <#${guildData.CommandsChannel}`
+                            value: `\`announcements\` — <#${guildData.AnnouncementChannel}>\n\`commands\` — <#${guildData.CommandsChannel}>`
                         },
                         {
                             name: "roles",
-                            value: `\`birthday\`: <@&${guildData.BirthdayRole}>\n\`admin\`: <@&${guildData.AdminRole}>`
+                            value: `\`birthday\` — <@&${guildData.BirthdayRole}>\n\`admin\` — <@&${guildData.AdminRole}>`
+                        },
+                        {
+                            name: "general",
+                            value: `\`changeable\` — **${String(guildData.Changeable)}**`
                         }
                     ).setColor(Config.colors.primary as ColorResolvable);
 
@@ -214,6 +227,10 @@ const config: SlashCommand = {
                                 .setFooter({
                                     text: "/config view",
                                     iconURL: client.user.avatarURL()
+                                })
+                                .setAuthor({
+                                    name: interaction.user.displayName,
+                                    iconURL: interaction.user.avatarURL()
                                 });
 
                             return await interaction.reply({ embeds: [embed] });
@@ -317,9 +334,77 @@ const config: SlashCommand = {
                             embed
                                 .setColor(Config.colors.error as ColorResolvable)
                                 .setDescription(`**Error resetting role settings!**\n\n\`${err}\``);
+                            return await interaction.reply({ embeds: [embed], ephemeral: true });
                         }
                     default:
                         break;
+                }
+            // general guild settings
+            case "general":
+
+                // sub commands
+                switch (subCommand) {
+                    case "changeable":
+
+                        const changeable = options.getBoolean("yes", true);
+
+                        if (changeable) {
+                            try {
+                                await guildData.updateOne({
+                                    Changeable: true
+                                });
+
+                                embed 
+                                    .setColor(Config.colors.success as ColorResolvable)
+                                    .setDescription(`Successfully set the guild's \`changeable\` settings to **true**!`)
+                                    .setFooter({
+                                        text: "/config view",
+                                        iconURL: client.user.avatarURL()
+                                    })
+                                    .setAuthor({
+                                        name: interaction.user.displayName,
+                                        iconURL: interaction.user.avatarURL()
+                                    });
+                                
+                                return await interaction.reply({ embeds: [embed] });
+
+                            } catch (err) {
+                                console.log(`[ERROR] Error setting guild (${guildId}) changeable settings!\n${err}`.red);
+
+                                embed
+                                    .setColor(Config.colors.error as ColorResolvable)
+                                    .setDescription(`**Error setting guild changeable settings!**\n\n\`${err}\``);
+                                return await interaction.reply({ embeds: [embed], ephemeral: true });
+                            }
+                        } else {
+
+                            try {
+                                await guildData.updateOne({
+                                    Changeable: false,
+                                });
+                                embed 
+                                    .setColor(Config.colors.success as ColorResolvable)
+                                    .setDescription(`Successfully set the guild's \`changeable\` settings to **false**!`)
+                                    .setFooter({
+                                        text: "/config view",
+                                        iconURL: client.user.avatarURL()
+                                    })
+                                    .setAuthor({
+                                        name: interaction.user.displayName,
+                                        iconURL: interaction.user.avatarURL()
+                                    });
+                                
+                                return await interaction.reply({ embeds: [embed] });
+
+                            } catch (err) {
+                                console.log(`[ERROR] Error setting guild (${guildId}) changeable settings!\n${err}`.red);
+
+                                embed
+                                    .setColor(Config.colors.error as ColorResolvable)
+                                    .setDescription(`**Error setting guild changeable settings!**\n\n\`${err}\``);
+                                return await interaction.reply({ embeds: [embed], ephemeral: true });
+                            }
+                        }
                 }
         }
     },

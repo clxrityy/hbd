@@ -1,6 +1,5 @@
 import { Config } from "./utils/types";
 import client from ".";
-import { ColorResolvable } from "discord.js";
 
 const config: Config = {
     client: client,
@@ -26,7 +25,7 @@ const config: Config = {
         },
     },
     commands: {
-        adminCommands: ["config"],
+        adminCommands: ["config", "edit"],
         devCommands: ["bot"]
     },
     developerIds: ['244304391815823361', '706976863096143936']
