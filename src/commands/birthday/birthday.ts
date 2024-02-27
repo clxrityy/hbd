@@ -1,10 +1,11 @@
 import { ColorResolvable, EmbedBuilder, SlashCommandBuilder, userMention } from "discord.js";
-import { SlashCommand } from "../../utils/types";
+import { BirthdayData, SlashCommand } from "../../utils/types";
 import Birthday from "../../models/Birthday";
 import Config from "../../config";
 import "colors";
 import Guild from "../../models/Guild";
 import "colors";
+import { getMonth } from "../../utils/bdayUtil";
 
 const birthday: SlashCommand = {
     data: new SlashCommandBuilder()
@@ -37,7 +38,17 @@ const birthday: SlashCommand = {
                 .setDescription("The user you'd like to view")
                 .setRequired(false)
             )
-        ).toJSON(),
+        ).addSubcommand((sub) => sub
+            .setName("list")
+            .setDescription("List guild birthdays")
+            .addNumberOption((option) => option
+                .setName("month")
+                .setDescription("List by month")
+                .setRequired(false)
+            )
+
+        )
+        .toJSON(),
     userPermissions: [],
     botPermissions: [],
     run: async (client, interaction) => {
@@ -173,6 +184,59 @@ const birthday: SlashCommand = {
 
                         return await interaction.reply({ embeds: [embed], ephemeral: true });
                     }
+                }
+            case "list":
+                const month = options.getNumber("month", false);
+
+                let guildBirthdays = await Birthday.find({ GuildID: guildId });
+
+                let birthdayArray: BirthdayData[] = [];
+
+                if (!month) {
+
+                    for (const birthdayData of guildBirthdays) {
+                        birthdayArray.push({ userId: birthdayData.UserID, birthday: birthdayData.Birthday });
+                    }
+
+                    const birthdaysMapped = birthdayArray.map((data) => (
+                        `${userMention(data.userId)} — \`${data.birthday}\``
+                    ));
+
+                    const birthdays = birthdaysMapped.join(`\n`);
+
+                    embed
+                        .setColor(Config.colors.primary as ColorResolvable)
+                        .setDescription(birthdays)
+
+
+                    return await interaction.reply({ embeds: [embed] });
+                } else {
+
+                    for (const birthdayData of guildBirthdays) {
+                        if (Number(birthdayData.Birthday.split("/")[0]) === month) {
+                            birthdayArray.push({ userId: birthdayData.UserID, birthday: birthdayData.Birthday });
+                        }
+                    }
+
+                    const selectedMonth = getMonth(month);
+
+                    const birthdaysMapped = birthdayArray.map((data) => (
+                        `${userMention(data.userId)} — \`${data.birthday}\``
+                    ));
+
+                    if (birthdaysMapped.length > 0) {
+                        const birthdays = birthdaysMapped.join(`\n`);
+
+                        embed
+                            .setColor(Config.colors.primary as ColorResolvable)
+                            .setDescription(`**${selectedMonth}**\n\n${birthdays}`);
+                    } else {
+                        embed
+                            .setColor(Config.colors.primary as ColorResolvable)
+                            .setDescription(`**${selectedMonth}**\n\nNo birthdays found!`);
+                    }
+
+                    return await interaction.reply({ embeds: [embed] });
                 }
         }
     }

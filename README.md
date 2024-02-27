@@ -158,7 +158,6 @@ try {
 
 - [x] make it so commands only work in the command channel(s)
   - [ ] also so that there can be mulitple command channels
-- [ ] add configuration for announcing multiple birthdays
 - [x] add configuration for giving the _birthday_ role
   - [x] and removing once the day is over
 - [ ] add the ability for guild admins to configure the _"happy birthday"_ message/embed

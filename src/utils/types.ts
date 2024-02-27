@@ -57,3 +57,8 @@ export type Config = {
     },
     developerIds: string[]
 }
+
+export type BirthdayData = {
+    userId: string;
+    birthday: string;
+}
