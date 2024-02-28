@@ -48,17 +48,29 @@ export type Config = {
         primary?: string | ColorResolvable;
         secondary?: string | ColorResolvable;
     },
-    messages: {
-        happyBirthday: Embed;
+    messages?: {
+        happyBirthdayAnnouncement?: Embed;
+        happyBirthdayMessage?: string;
     },
     commands: {
         adminCommands: string[];
         devCommands: string[];
     },
-    developerIds: string[]
+    developerIds: string[],
+    options?: {
+        startYear?: number
+    }
 }
 
 export type BirthdayData = {
     userId: string;
     birthday: string;
+}
+
+export type WishData = {
+    guildId: string;
+    targetUserId: string;
+    userId: string;
+    year: number;
+    message?: string;
 }

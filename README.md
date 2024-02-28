@@ -90,6 +90,7 @@ try {
 # `/` commands
 
 - [birthday](#birthday)
+  - [hbd](#hbd-1)
 - [admin](#admin)
   - [edit](#edit)
   - [config](#config)
@@ -105,6 +106,15 @@ try {
 - `/birthday view {user}`
   - view an (optional) target user's birthday
   - shows your own by default
+
+#### `/hbd`
+
+- `/hbd wish {user} {birthday_message}`
+  - wish a user a happy birthday
+  - *birthday message optional*
+- `/hbd view {target} {year}`
+  - view birthday wishes
+  = *target user & year optional*
 
 
 ## admin <img src="/assets/admin.png" style="width:25px">
@@ -173,7 +183,7 @@ try {
   - see what sign users are
   - horoscope
   - etc.
-- [ ] wish users happy birthday
+- [x] wish users happy birthday
   - only available on a person's birthday
   - `/wish {user} {message}`
   - `/wishes` - can view any time
