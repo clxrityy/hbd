@@ -98,7 +98,7 @@ try {
     - [view](#config-view)
     - [channels](#channels)
     - [roles](#roles)
-    - [messages]
+    - [messages](#messages)
     - [general](#general)
 
 ## birthday <img src="/assets/icon.png" style="width:25px">
