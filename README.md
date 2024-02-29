@@ -8,10 +8,11 @@ a discord birthday bot
 
 # `ℹ️` how it works
 
-- guild & user data is stored in mongoose [models](https://mongoosejs.com/docs/models.html)
+- data is stored in mongoose [models](https://mongoosejs.com/docs/models.html)
 
   - guild settings (channels, roles)
   - user's birthdays
+  - birthday wishes
 
 - when the bot logs in, the [`interval`](./src/events/interval) event is emitted:
 
@@ -97,6 +98,7 @@ try {
     - [view](#config-view)
     - [channels](#channels)
     - [roles](#roles)
+    - [messages]
     - [general](#general)
 
 ## birthday <img src="/assets/icon.png" style="width:25px">
@@ -153,6 +155,13 @@ try {
 
 > by default both are nothing
 
+#### messages:
+
+##### `/config messages`
+
+- `announcement` — the message that announces user's birthdays
+  - use `{{user}}` to indicate the user mention
+
 #### general
 
 ##### `/config general`
@@ -170,7 +179,7 @@ try {
   - [ ] also so that there can be mulitple command channels
 - [x] add configuration for giving the _birthday_ role
   - [x] and removing once the day is over
-- [ ] add the ability for guild admins to configure the _"happy birthday"_ message/embed
+- [x] add the ability for guild admins to configure the _"happy birthday"_ message/embed
 - [x] add the abiltiy for guild admins to change birthdays
   - [x] and/or change settings to allow people to change theirs
     - [ ] certain role can update their birthday(?)

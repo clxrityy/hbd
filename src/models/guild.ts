@@ -7,6 +7,7 @@ const guildSchema = new Schema({
     AdminRole: String,
     BirthdayRole: String,
     Changeable: Boolean,
+    AnnouncementMessage: String,
 },
     { strict: false },
 );

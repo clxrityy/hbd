@@ -70,11 +70,28 @@ const config: SlashCommand = {
                 .setName("reset")
                 .setDescription("Reset role settings")
             )
+    )
+        // messages
+        .addSubcommandGroup((group) => group
+            .setName("messages")
+            .setDescription("Message settings")
+            // birthday announcement
+            .addSubcommand((sub) => sub
+                .setName("announcement")
+                .setDescription("The birthday announcement message")
+                .addStringOption((option) => option
+                    .setName("announcement_message")
+                    .setDescription("Use {{user}} to indicate the birthday user")
+                    .setRequired(true)
+            )
         )
+    )
+        // general
         .addSubcommandGroup((group) => group
             .setName("general")
             .setDescription("General true/false guild settings")
             .addSubcommand((sub) => sub
+                // changeable
                 .setName("changeable")
                 .setDescription("Should all users be able to change their birthday?")
                 .addBooleanOption((option) => option
@@ -128,9 +145,13 @@ const config: SlashCommand = {
                             value: `\`birthday\` — <@&${guildData.BirthdayRole}>\n\`admin\` — <@&${guildData.AdminRole}>`
                         },
                         {
+                            name: "messages",
+                            value: `\`announcement_message\` — *${guildData.AnnouncementMessage}*`
+                        },
+                        {
                             name: "general",
                             value: `\`changeable\` — **${String(guildData.Changeable)}**`
-                        }
+                        },
                     ).setColor(Config.colors.primary as ColorResolvable);
 
                 return await interaction.reply({ embeds: [embed], ephemeral: true });
@@ -404,6 +425,42 @@ const config: SlashCommand = {
                                     .setDescription(`**Error setting guild changeable settings!**\n\n\`${err}\``);
                                 return await interaction.reply({ embeds: [embed], ephemeral: true });
                             }
+                        }
+                }
+            case "messages":
+                switch (subCommand) {
+
+                    case "announcement":
+                        const announcementMsg = options.getString("announcement_message", true);
+
+                        try {
+                            await guildData.updateOne({
+                                AnnouncementMessage: announcementMsg
+                            });
+
+                            const announcementMsgParsed = announcementMsg.replace("{{user}}", "`{user}`")
+
+                            embed
+                                .setDescription(`Successfully updated the announcement message!\n\n*${announcementMsgParsed}*`)
+                                .setColor(Config.colors.success as ColorResolvable)
+                                .setFooter({
+                                    text: "/config view",
+                                    iconURL: client.user.avatarURL()
+                                })
+                                .setAuthor({
+                                    name: interaction.user.displayName,
+                                    iconURL: interaction.user.avatarURL()
+                                });
+                            
+                            return await interaction.reply({ embeds: [embed] });
+                        } catch (err) {
+                            console.log(`[ERROR] Error configuring announcement message!\n\n${err}`.red);
+
+                            embed
+                                .setColor(Config.colors.error as ColorResolvable)
+                                .setDescription(`**Error configuring the announcement message!**\n\n\`${err}\``);
+                            
+                            return await interaction.reply({ embeds: [embed] });
                         }
                 }
         }

@@ -1,4 +1,4 @@
-import { Client, ColorResolvable, EmbedBuilder, TextChannel } from "discord.js";
+import { Client, ColorResolvable, EmbedBuilder, TextChannel, userMention } from "discord.js";
 import Birthday from "../../models/Birthday";
 import Guild from "../../models/Guild";
 import Config from "../../config";
@@ -29,13 +29,20 @@ module.exports = async (client: Client, ...args: string[]) => {
         channel = await (await client.guilds.fetch(guildId)).channels.fetch()[0] as TextChannel;
     }
 
-    channel = await (await (await client.guilds.fetch(guildId)).channels.fetch(announceChannelId)).fetch() as TextChannel
+    let message = guildData.AnnouncementMessage;
 
-    const embed = new EmbedBuilder()
+    let embed = new EmbedBuilder()
         .setTitle(Config.messages.happyBirthdayAnnouncement.title)
         .setDescription(`Happy birthday to <@!${userId}>!`)
         .setColor(Config.colors.primary as ColorResolvable)
         .setFooter(Config.messages.happyBirthdayAnnouncement.footer);
-    
-    return await channel.send({ embeds: [embed] });
+
+    channel = await (await (await client.guilds.fetch(guildId)).channels.fetch(announceChannelId)).fetch() as TextChannel;
+
+    if (!message) {
+        return await channel.send({ embeds: [embed] });
+    } else {
+        message = message.replace("{{user}}", `${userMention(userId)}`);
+        return await channel.send({ content: message });
+    }
 }
