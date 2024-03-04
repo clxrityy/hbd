@@ -142,11 +142,18 @@ const config: SlashCommand = {
             const subCommand = options.getSubcommand();
             // view
             if (subCommand === "view") {
+
+                const commandChannels = guildData.CommandsChannel;
+                const commandChannelsArray = commandChannels.map((channelId) => (
+                    `- <#${channelId}>`
+                ));
+                const commandChannelsString = commandChannelsArray.join("\n")
+
                 embed.setDescription(`**${guild.name}'s settings**: \n\n`)
                     .addFields(
                         {
                             name: "channels",
-                            value: `\`announcements\` — <#${guildData.AnnouncementChannel}>\n\`commands\` — <#${guildData.CommandsChannel}>`
+                            value: `\`announcements\` — <#${guildData.AnnouncementChannel}>\n\`commands\` — \n${commandChannelsString}`
                         },
                         {
                             name: "roles",
