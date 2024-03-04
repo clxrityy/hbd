@@ -116,7 +116,7 @@ try {
   - *birthday message optional*
 - `/hbd view {target} {year}`
   - view birthday wishes
-  = *target user & year optional*
+  - *target **user** & **year** are optional*
 
 
 ## admin <img src="/assets/admin.png" style="width:25px">
@@ -176,7 +176,7 @@ try {
 #### functionality
 
 - [x] make it so commands only work in the command channel(s)
-  - [ ] also so that there can be mulitple command channels
+  - [x] also so that there can be mulitple command channels
 - [x] add configuration for giving the _birthday_ role
   - [x] and removing once the day is over
 - [x] add the ability for guild admins to configure the _"happy birthday"_ message/embed
@@ -184,7 +184,8 @@ try {
   - [x] and/or change settings to allow people to change theirs
     - [ ] certain role can update their birthday(?)
 - [ ] add the ability to configure only a certain role(s) to be able to set their birthday
-- [ ] add a command to list birthdays (all or by month/day)
+- [x] add a command to list birthdays (all or by month/day)
+
 
 #### misc (?)
 
@@ -198,3 +199,4 @@ try {
   - `/wishes` - can view any time
 - [ ] option to have unique AI generated messages to wish people happy birthday
 - [ ] option to change the guild name upon someone's birthday (kudos to good vibes)
+- [ ] add some sort of `/whitelist` optional command to whitelist users from certain commands

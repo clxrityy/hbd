@@ -4,6 +4,7 @@ import { getLocalCommands } from "../../utils/getCommands";
 import { SlashCommand } from "../../utils/types";
 import config from "../../config";
 import Guild from "../../models/Guild";
+// import Whitelist from "../../models/Whitelist";
 
 module.exports = async (client: Client, interaction: CommandInteraction) => {
 
@@ -40,6 +41,13 @@ module.exports = async (client: Client, interaction: CommandInteraction) => {
         }
     }
 
+    // let whitelistData = await Whitelist.find({ GuildID: guildId });
+    // let whitelistDataRolesArray = whitelistData.map((data) => (
+    //     data.RoleID
+    // ));
+    // let whitelistDataCommandNamesArray = whitelistData.map((data) => (
+    //     data.CommandName
+    // ));
     // guild admin commands
 
     if (config.commands.adminCommands.includes(commandObject.data.name) && guildData.AdminRole) {
@@ -51,7 +59,8 @@ module.exports = async (client: Client, interaction: CommandInteraction) => {
                     }
                 })
             }
-        })
+        });
+
     } else if (config.commands.adminCommands.includes(commandObject.data.name) && !guildData.AdminRole) {
 
         if (!interaction.memberPermissions.has(PermissionsBitField.Flags.Administrator)) {
@@ -68,6 +77,7 @@ module.exports = async (client: Client, interaction: CommandInteraction) => {
             }
         }
     } else {
+
         // developer commands
         if (config.commands.devCommands.includes(commandObject.data.name)) {
             if (!config.developerIds.includes(interaction.user.id)) {
@@ -83,12 +93,13 @@ module.exports = async (client: Client, interaction: CommandInteraction) => {
                     await interaction.reply({ embeds: [embed], ephemeral: true });
                 }
             }
+            
         } else {
             try {
                 if (!guildData.CommandsChannel) {
                     await commandObject.run(client, interaction)
                 } else {
-                    if (guildData.CommandsChannel === channelId) {
+                    if (guildData.CommandsChannel.includes(channelId)) {
                         await commandObject.run(client, interaction);
                     } else {
                         const embed = createEmbed(config.colors.error as ColorResolvable, `You tried to execute a command, but my commands can only be executed in <#${guildData.CommandsChannel}>`);

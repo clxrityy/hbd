@@ -1,7 +1,6 @@
 import {  ApplicationCommandManager, Client, GuildApplicationCommandManager,  } from "discord.js";
 import path from "path";
 import getFiles from "./getFiles";
-import { SlashCommand } from "./types";
 
 const getApplicationCommands = async (client: Client, guildId?: string) => {
     let applicationCommands: GuildApplicationCommandManager | ApplicationCommandManager;

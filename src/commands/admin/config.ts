@@ -33,13 +33,21 @@ const config: SlashCommand = {
                 .setDescription("The channel for commands")
                 .addChannelOption((option) => option
                     .setName("command_channel")
-                    .setDescription("Mention the channel")
+                    .setDescription("Mention the channel. There can be multiple, reset the settings to remove them")
                     .setRequired(true)
                 )
             )
             .addSubcommand((sub) => sub
                 .setName("reset")
                 .setDescription("Reset channel settings")
+                .addStringOption((option) => option
+                    .setName("setting")
+                    .setDescription("Which channel setting you'd like to reset")
+                    .addChoices(
+                        { name: "Announcements", value: "announcement_channel" },
+                        {name: "Commands", value: "command_channel"}
+                    )
+            )
             )
         )
         // roles
@@ -207,12 +215,33 @@ const config: SlashCommand = {
 
                         try {
 
+                            let commandChannels = guildData.CommandsChannel;
+                            let commandChannelsMapped = commandChannels.map((channelId) => (
+                                `- <#${channelId}>`
+                            ));
+                            let commandChannelsString = commandChannelsMapped.join("\n")
+
+                            if (commandChannels.includes(channel.id)) {
+                                
+                                embed
+                                    .setColor(Config.colors.error as ColorResolvable)
+                                    .setDescription(`This channel is already listed as a command channel!\n\n**Command channels**:\n${commandChannelsString}`);
+                                
+                                return await interaction.reply({ embeds: [embed], ephemeral: true });
+                            }
+
+                            commandChannels.push(channel.id);
+                            commandChannelsMapped = commandChannels.map((channelId) => (
+                                `- <#${channelId}>`
+                            ));
+                            commandChannelsString = commandChannelsMapped.join("\n")
+
                             await guildData.updateOne({
-                                CommandsChannel: channel.id
+                                CommandsChannel: commandChannels
                             });
 
                             embed
-                                .setDescription(`Successfully updated configurations!\n\n**Command channel**: <#${channel.id}>`)
+                                .setDescription(`Successfully updated configurations!\n\n**Command channels**: ${commandChannelsString}`)
                                 .setColor(Config.colors.success as ColorResolvable)
                                 .setFooter({
                                     text: "/config view",
@@ -235,32 +264,57 @@ const config: SlashCommand = {
                         }
                     // reset
                     case "reset":
+                        const option = options.getString("setting", true);
+                        
+                        switch (option) {
+                            case "announcement_channel":
 
-                        try {
-                            await guildData.updateOne({
-                                AnnouncementChannel: undefined,
-                                CommandsChannel: undefined,
-                            });
+                                try {
+                                    await guildData.updateOne({
+                                        AnnouncementChannel: null
+                                    });
 
-                            embed
-                                .setDescription(`Successfully reset channel configurations!`)
-                                .setColor(Config.colors.success as ColorResolvable)
-                                .setFooter({
-                                    text: "/config view",
-                                    iconURL: client.user.avatarURL()
-                                })
-                                .setAuthor({
-                                    name: interaction.user.displayName,
-                                    iconURL: interaction.user.avatarURL()
-                                });
+                                    embed
+                                        .setColor(Config.colors.success as ColorResolvable)
+                                        .setDescription(`Successfully reset the announcement channel!\n\n**Announcement channel**: \`null\``);
+                                    
+                                    return await interaction.reply({ embeds: [embed] });
 
-                            return await interaction.reply({ embeds: [embed] });
-                        } catch (err) {
-                            console.log(`${err}`.red)
-                            embed
-                                .setColor(Config.colors.error as ColorResolvable)
-                                .setDescription(`**Error resetting channel settings!**\n\n\`${err}\``);
+                                } catch (err) {
+
+                                    console.log(`[ERROR] There was an error resetting announcement channel settings for guild: ${guildId}]\n\n${err}`.red);
+
+                                    embed
+                                        .setColor(Config.colors.error as ColorResolvable)
+                                        .setDescription(`**Error resetting the announcement channel!**\n\n\`${err}\``);
+                                    
+                                    return await interaction.reply({ embeds: [embed], ephemeral: true });
+                                }
+
+                            case "command_channel":
+                                try {
+                                    await guildData.updateOne({ CommandsChannel: [] });
+
+                                    const commandChannelsMapped = guildData.CommandsChannel.map((channel) => (
+                                        `- <#${channel}>`
+                                    ));
+                                    const commandChannelString = commandChannelsMapped.join("\n")
+
+                                    embed
+                                        .setColor(Config.colors.success as ColorResolvable)
+                                        .setDescription(`Successfully reset the command channels!\n\n**Command channels**:\n${commandChannelString}`)
+
+                                } catch (err) {
+                                    console.log(`[ERROR] There was an error resetting command channel settings for guild: ${guildId}]\n\n${err}`.red);
+
+                                    embed
+                                        .setColor(Config.colors.error as ColorResolvable)
+                                        .setDescription(`**Error resetting the command channels!**\n\n\`${err}\``);
+                                    
+                                    return await interaction.reply({ embeds: [embed], ephemeral: true });
+                                }
                         }
+
                     default:
                         break;
                 }
