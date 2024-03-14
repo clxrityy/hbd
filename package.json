@@ -40,14 +40,14 @@
   "license": "MIT",
   "devDependencies": {
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.4.2"
   },
   "dependencies": {
     "colors": "^1.4.0",
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.5",
-    "mongoose": "^8.2.0",
+    "mongoose": "^8.2.1",
     "nodemon": "^3.1.0",
-    "openai": "^4.28.4"
+    "openai": "^4.29.0"
   }
 }
