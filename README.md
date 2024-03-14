@@ -92,6 +92,7 @@ try {
 
 - [birthday](#birthday)
   - [hbd](#hbd-1)
+  - [horoscope](#horoscope)
 - [admin](#admin)
   - [edit](#edit)
   - [config](#config)
@@ -190,7 +191,7 @@ try {
 #### misc (?)
 
 - [ ] zodiac sign commands(?)
-  - see what sign users are
+  - [x] see what sign users are
   - horoscope
   - etc.
 - [x] wish users happy birthday

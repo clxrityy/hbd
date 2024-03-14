@@ -74,3 +74,12 @@ export type WishData = {
     year: number;
     message?: string;
 }
+
+type SignName = "Aries" | "Taurus" | "Gemini" | "Cancer" | "Leo" | "Virgo" | "Libra" | "Scorpio" | "Sagittarius" | "Capricorn" | "Aquarius" | "Pisces";
+
+export type Sign = {
+    symbol: string;
+    name: SignName;
+    startDate: string;
+    endDate: string;
+}
