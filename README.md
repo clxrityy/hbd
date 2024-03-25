@@ -2,7 +2,7 @@
 
 a discord birthday bot
 
-#### ⚠️ in development
+[🔗 invite](https://discord.com/oauth2/authorize?client_id=1211045842362966077&permissions=2415921152&scope=bot)
 
 ---
 
