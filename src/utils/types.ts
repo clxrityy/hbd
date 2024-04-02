@@ -83,3 +83,14 @@ export type Sign = {
     startDate: string;
     endDate: string;
 }
+
+export type QueryPrompt = {
+    userData: {
+        username: string;
+        id: string;
+    };
+    guildId: string;
+    currentDate: Date | number;
+    birthday: string;
+    sign: Sign;
+}

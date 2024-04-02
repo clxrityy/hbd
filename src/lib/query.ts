@@ -1,55 +1,47 @@
-/* import openai from "./openai";
-import config from "../config";
-import guild from "../models/Guild";
+import { QueryPrompt } from "../utils/types";
+import openai from "./openai";
 
 function sleep(ms: number) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-const query = async (prompt: string, guildId: string) => {
+export default async function query(prompt: QueryPrompt) {
     
-    let guildData = await guild.findOne({ GuildID: guildId });
+    const currentDate = prompt.currentDate instanceof Date ? prompt.currentDate : new Date(prompt.currentDate);
+    const dateObj = new Date(currentDate);
+    const month = dateObj.getMonth();
+    const day = dateObj.getDay();
+    const year = dateObj.getFullYear();
+    const date = `${month + 1}/${day}/${year}`;
 
-    if (!guildData) {
-        guildData = new guild({
-            GuildID: guildId,
-            Temperature: config.openai.temperature,
-            SystemRoleContent: config.openai.systemRoleContent,
-            PresencePenalty: config.openai.presence_penalty,
-            Model: config.openai.model,
-        });
+    const signObj = prompt.sign;
+    const sign = signObj.name;
+    const user = prompt.userData.username;
 
-        await guildData.save();
+    const queryPrompt = `USER: ${user}\nSIGN: ${sign}\nCURRENT DATE: ${date}\nBIRTHDAY: ${prompt.birthday}`;
+
+    try {
+        const res = await openai.chat.completions.create({
+            model: "gpt-3.5-turbo",
+            messages: [
+                {
+                    role: "system",
+                    content: "Your job is to provide a horoscope for a user based on their birthday/zodiac sign and current date. Tell them what they can expect for the day in a spiritual sense. (If possible, provide evidence based on how the stars are aligned)"
+                },
+                {
+                    role: "user",
+                    content: queryPrompt
+                },
+            ],
+            temperature: 0.75,
+        })
+            .then((res) => res.choices[0].message.content)
+            .catch((err) => `**An error occurred:**\n\`\`\`${err}\`\`\``);
+        
+        await sleep(500);
+    
+        return res;
+    } catch (e) {
+        return `An error occurred: \`${e}\``;
     }
-    
-    if (!prompt || prompt.length < 1) return false;
-
-
-    const res = await openai.chat.completions.create({
-        model: guildData.Model,
-        messages: [
-            {
-                role: "system",
-                content: guildData.SystemRoleContent
-            },
-            {
-                role: "user",
-                content: prompt
-            }
-        ],
-        temperature: guildData.Temperature,
-        presence_penalty: guildData.PresencePenalty
-    })
-        .then((res) => res.choices[0].message)
-        .catch((err) => `**Error with query!**\n${err}`);
-    
-    await sleep(500);
-
-    if (typeof res === 'object') {
-        return res.content;
-    }
-
-    return res;
 }
-
-export default query; */

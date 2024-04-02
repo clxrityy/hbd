@@ -2,7 +2,13 @@
 
 a discord birthday bot
 
-[🔗 invite](https://discord.com/oauth2/authorize?client_id=1211045842362966077&permissions=2415921152&scope=bot)
+## [🔗 invite](https://discord.com/oauth2/authorize?client_id=1211045842362966077&permissions=2415921152&scope=bot)
+
+---
+
+- [how it works](#ℹ️-how-it-works)
+- [commands](#commands)
+- [to-do](#→-todo)
 
 ---
 
@@ -196,8 +202,6 @@ try {
   - etc.
 - [x] wish users happy birthday
   - only available on a person's birthday
-  - `/wish {user} {message}`
-  - `/wishes` - can view any time
 - [ ] option to have unique AI generated messages to wish people happy birthday
 - [ ] option to change the guild name upon someone's birthday (kudos to good vibes)
 - [ ] add some sort of `/whitelist` optional command to whitelist users from certain commands
