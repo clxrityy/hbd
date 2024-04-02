@@ -17,7 +17,11 @@ const eventHandler = (client: Client) => {
         client.on(eventName, async (args) => {
             for (const eventFile of eventFiles) {
                 const eventFunction = require(eventFile);
-                await eventFunction(client, args);
+                try {
+                    await eventFunction(client, args);
+                } catch (e) {
+                    console.error(e);
+                }
             }
         });
     }

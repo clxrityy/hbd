@@ -26,7 +26,7 @@ export default async function query(prompt: QueryPrompt) {
             messages: [
                 {
                     role: "system",
-                    content: "Your job is to provide a horoscope for a user based on their birthday/zodiac sign and current date. Tell them what they can expect for the day in a spiritual sense. (If possible, provide evidence based on how the stars are aligned)"
+                    content: "Your job is to provide a horoscope for a user based on their birthday/zodiac sign and current date. Tell them what they can expect for the day in a spiritual sense. (If possible, provide evidence based on how the stars are aligned). Keep your response to below 500 characters."
                 },
                 {
                     role: "user",
@@ -38,7 +38,7 @@ export default async function query(prompt: QueryPrompt) {
             .then((res) => res.choices[0].message.content)
             .catch((err) => `**An error occurred:**\n\`\`\`${err}\`\`\``);
         
-        await sleep(500);
+        await sleep(250);
     
         return res;
     } catch (e) {

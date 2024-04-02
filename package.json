@@ -22,7 +22,8 @@
     "interval",
     "automation",
     "bot",
-    "birthday"
+    "birthday",
+    "horoscope"
   ],
   "repository": {
     "type": "git",

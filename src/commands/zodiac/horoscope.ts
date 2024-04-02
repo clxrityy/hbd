@@ -8,7 +8,7 @@ import query from "../../lib/query";
 const horoscope: SlashCommand = {
     data: new SlashCommandBuilder()
         .setName("horoscope")
-        .setDescription("View your horoscope for the day"),
+        .setDescription("View your horoscope for the day").toJSON(),
     userPermissions: [],
     botPermissions: [],
     run: async (client, interaction) => {
