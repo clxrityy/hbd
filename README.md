@@ -57,7 +57,7 @@ module.exports = (client: Client) => {
 ### [birthday event](./src/events/birthday/)
 
 - fetches the channel to announce in and announces the birthday 
-    - [🔗 `events/birthday/announce.ts`](./src/events/birthday/announce.ts)
+    - 🔗 [`events/birthday/announce.ts`](./src/events/birthday/announce.ts)
 
 ```ts
 //...
@@ -71,7 +71,7 @@ return await channel.send(/* ... */);
 ```
 
 - fetches the birthday role (if it exists) and gives it to the user
-    - [🔗 `events/birthday/role.ts`](./src/events/birthday/role.ts)
+    - 🔗 [`events/birthday/role.ts`](./src/events/birthday/role.ts)
 
 ```ts
 let birthdayRole: Role;
