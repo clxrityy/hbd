@@ -1,18 +1,16 @@
 # hbd <img src="/assets/avatar.gif" style="width:40px">
 
-a discord birthday bot
+a discord bot for user's birthdays, horoscopes, and wishing user's a happy birthday.
 
-## [🔗 invite](https://discord.com/oauth2/authorize?client_id=1211045842362966077&permissions=2415921152&scope=bot)
 
----
-
-- [how it works](#ℹ️-how-it-works)
-- [commands](#commands)
-- [to-do](#→-todo)
+#### 🔗 [INVITE](https://discord.com/oauth2/authorize?client_id=1211045842362966077&permissions=2415921152&scope=bot)
+#### 🌐 [DISCORD SERVER](https://discord.gg/n65AVpTFNf)
+#### 📖 [WIKI](https://github.com/clxrityy/hbd/wiki)
+- [Getting Started](https://github.com/clxrityy/hbd/wiki/Getting-Started)
 
 ---
 
-# `ℹ️` how it works
+# how it works
 
 - data is stored in mongoose [models](https://mongoosejs.com/docs/models.html)
 
@@ -91,117 +89,3 @@ try {
     //...
 }
 ```
-
----
-
-# `/` commands
-
-- [birthday](#birthday)
-  - [hbd](#hbd-1)
-  - [horoscope](#horoscope)
-- [admin](#admin)
-  - [edit](#edit)
-  - [config](#config)
-    - [view](#config-view)
-    - [channels](#channels)
-    - [roles](#roles)
-    - [messages](#messages)
-    - [general](#general)
-
-## birthday <img src="/assets/icon.png" style="width:25px">
-
-- `/birthday set {month} {day}`
-  - can only be set once
-- `/birthday view {user}`
-  - view an (optional) target user's birthday
-  - shows your own by default
-
-#### `/hbd`
-
-- `/hbd wish {user} {birthday_message}`
-  - wish a user a happy birthday
-  - *birthday message optional*
-- `/hbd view {target} {year}`
-  - view birthday wishes
-  - *target **user** & **year** are optional*
-
-
-## admin <img src="/assets/admin.png" style="width:25px">
-- by default, only accessible to users with **Administrator** permissions
-  - otherwise, also accessible to users with the established [admin role](#roles)
-
-#### `/edit`
-
-- `/edit {user} {month} {day}`
-- change a user's birthday
-
-### config 
-
-#### `/config view`
-
-- view your guild's configurations
-
-#### channels:
-
-##### `/config channels`
-
-- `announcement_channel`— the channel for birthdays to be announced in
-- `command_channel` — the channel for commands
-- **`reset`** — **reset the channel settings**
-
-> by default they will both be the default channel
-
-#### roles:
-
-##### `/config roles`
-
-- `birthday_role` — the role users get on their birthday
-  - make sure the bot's role position is higher, otherwise the bot will not have permission to manage this role.
-- `admin_role` — the role that can configure birthday settings
-- **`reset`** — **reset the role settings**
-
-> by default both are nothing
-
-#### messages:
-
-##### `/config messages`
-
-- `announcement` — the message that announces user's birthdays
-  - use `{{user}}` to indicate the user mention
-
-#### general
-
-##### `/config general`
-- `changeable` — whether or not user's can edit their own birthdays
-  - **true** or **false**
-  - by default only admins can edit birthdays
-
----
-
-# `→` TODO
-
-#### functionality
-
-- [x] make it so commands only work in the command channel(s)
-  - [x] also so that there can be mulitple command channels
-- [x] add configuration for giving the _birthday_ role
-  - [x] and removing once the day is over
-- [x] add the ability for guild admins to configure the _"happy birthday"_ message/embed
-- [x] add the abiltiy for guild admins to change birthdays
-  - [x] and/or change settings to allow people to change theirs
-    - [ ] certain role can update their birthday(?)
-- [ ] add the ability to configure only a certain role(s) to be able to set their birthday
-- [x] add a command to list birthdays (all or by month/day)
-
-
-#### misc (?)
-
-- [ ] zodiac sign commands(?)
-  - [x] see what sign users are
-  - horoscope
-  - etc.
-- [x] wish users happy birthday
-  - only available on a person's birthday
-- [ ] option to have unique AI generated messages to wish people happy birthday
-- [ ] option to change the guild name upon someone's birthday (kudos to good vibes)
-- [ ] add some sort of `/whitelist` optional command to whitelist users from certain commands
