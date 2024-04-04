@@ -1,6 +1,6 @@
 {
   "name": "hbd",
-  "version": "1.0.0",
+  "version": "1.0.8",
   "description": "A Discord birthday bot",
   "main": "index.js",
   "scripts": {

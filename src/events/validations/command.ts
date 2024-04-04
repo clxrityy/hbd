@@ -1,9 +1,9 @@
 import "colors";
 import { Client, ColorResolvable, CommandInteraction, EmbedBuilder, PermissionsBitField } from "discord.js";
-import { getLocalCommands } from "../../utils/getCommands";
-import { SlashCommand } from "../../utils/types";
 import config from "../../config";
+import { SlashCommand } from "../../misc/types";
 import Guild from "../../models/Guild";
+import { getLocalCommands } from "../../utils/getCommands";
 // import Whitelist from "../../models/Whitelist";
 
 module.exports = async (client: Client, interaction: CommandInteraction) => {

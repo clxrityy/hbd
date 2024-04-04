@@ -14,6 +14,8 @@ const client = new Client({
     ] // Specify all the intents you wish your bot to access
 });
 
+export const cooldowns = new Map<string, number>(); // Cooldowns for commands
+
 eventHandler(client); // Register events
 
 client.login(process.env.BOT_TOKEN!).then(() => client.emit("interval")) // Login to the bot

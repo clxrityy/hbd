@@ -1,5 +1,5 @@
 import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
-import { SlashCommand } from "../../utils/types";
+import { SlashCommand } from "../../misc/types";
 
 const avatar: SlashCommand = {
     data: new SlashCommandBuilder()

@@ -1,5 +1,5 @@
-import { SlashCommand } from "../../utils/types";
-import { EmbedBuilder, SlashCommandBuilder, userMention, Colors } from "discord.js";
+import { Colors, EmbedBuilder, SlashCommandBuilder, userMention } from "discord.js";
+import { SlashCommand } from "../../misc/types";
 
 const ping: SlashCommand = {
     data: new SlashCommandBuilder()

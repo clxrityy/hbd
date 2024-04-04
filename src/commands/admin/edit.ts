@@ -1,8 +1,8 @@
-import { ColorResolvable, EmbedBuilder, SlashCommandBuilder, userMention } from "discord.js";
-import { SlashCommand } from "../../utils/types";
-import Birthday from "../../models/Birthday";
-import config from "../../config";
 import "colors";
+import { ColorResolvable, EmbedBuilder, SlashCommandBuilder, userMention } from "discord.js";
+import config from "../../config";
+import { SlashCommand } from "../../misc/types";
+import Birthday from "../../models/Birthday";
 
 const edit: SlashCommand = {
     data: new SlashCommandBuilder()

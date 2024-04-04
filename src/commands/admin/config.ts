@@ -1,8 +1,8 @@
-import { APIRole, ColorResolvable, EmbedBuilder, PermissionsBitField, Role, SlashCommandBuilder, TextChannel } from "discord.js";
-import { SlashCommand } from "../../utils/types";
-import Guild from "../../models/Guild";
-import Config from "../../config";
 import "colors";
+import { APIRole, ColorResolvable, EmbedBuilder, Role, SlashCommandBuilder, TextChannel } from "discord.js";
+import Config from "../../config";
+import { SlashCommand } from "../../misc/types";
+import Guild from "../../models/Guild";
 
 const config: SlashCommand = {
     data: new SlashCommandBuilder()

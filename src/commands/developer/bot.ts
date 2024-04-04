@@ -1,8 +1,7 @@
-import { ColorResolvable, EmbedBuilder, SlashCommandBuilder } from "discord.js";
-import { SlashCommand } from "../../utils/types";
-import Config from "../../config";
 import "colors";
-import config from "../../config";
+import { ColorResolvable, EmbedBuilder, SlashCommandBuilder } from "discord.js";
+import { default as Config, default as config } from "../../config";
+import { SlashCommand } from "../../misc/types";
 
 const bot: SlashCommand = {
     data: new SlashCommandBuilder()

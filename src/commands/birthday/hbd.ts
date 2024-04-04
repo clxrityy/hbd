@@ -1,7 +1,7 @@
 import { ColorResolvable, EmbedBuilder, SlashCommandBuilder, userMention } from "discord.js";
-import { SlashCommand } from "../../utils/types";
-import { checkIfAlreadyWished, checkIfBirthdayMember, getUserWishes } from "../../utils/bdayUtil";
 import config from "../../config";
+import { checkIfAlreadyWished, checkIfBirthdayMember, getUserWishes } from "../../misc/bdayUtil";
+import { SlashCommand } from "../../misc/types";
 import Wish from "../../models/Wish";
 
 const date = new Date();

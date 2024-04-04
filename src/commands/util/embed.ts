@@ -1,5 +1,5 @@
 import { ColorResolvable, EmbedBuilder, PermissionsBitField, SlashCommandBuilder, TextChannel } from "discord.js";
-import { SlashCommand } from "../../utils/types";
+import { SlashCommand } from "../../misc/types";
 
 const embed: SlashCommand = {
     data: new SlashCommandBuilder()

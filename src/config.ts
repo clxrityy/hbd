@@ -1,5 +1,5 @@
-import { Config } from "./utils/types";
 import client from ".";
+import { Config } from "./misc/types";
 
 const config: Config = {
     client: client,

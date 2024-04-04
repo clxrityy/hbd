@@ -1,8 +1,8 @@
 import { ColorResolvable, EmbedBuilder, SlashCommandBuilder } from "discord.js";
-import { Sign, SlashCommand } from "../../utils/types";
-import Birthday from "../../models/Birthday";
 import config from "../../config";
-import { getZodiacSign } from "../../utils/signs";
+import { getZodiacSign } from "../../misc/signs";
+import { Sign, SlashCommand } from "../../misc/types";
+import Birthday from "../../models/Birthday";
 
 const sign: SlashCommand = {
     data: new SlashCommandBuilder()

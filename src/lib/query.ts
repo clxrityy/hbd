@@ -1,4 +1,4 @@
-import { QueryPrompt } from "../utils/types";
+import { QueryPrompt } from "../misc/types";
 import openai from "./openai";
 
 function sleep(ms: number) {

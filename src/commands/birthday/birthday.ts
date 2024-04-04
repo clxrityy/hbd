@@ -1,11 +1,10 @@
+import "colors";
 import { ColorResolvable, EmbedBuilder, SlashCommandBuilder, userMention } from "discord.js";
-import { BirthdayData, SlashCommand } from "../../utils/types";
-import Birthday from "../../models/Birthday";
 import Config from "../../config";
-import "colors";
+import { getMonth } from "../../misc/bdayUtil";
+import { BirthdayData, SlashCommand } from "../../misc/types";
+import Birthday from "../../models/Birthday";
 import Guild from "../../models/Guild";
-import "colors";
-import { getMonth } from "../../utils/bdayUtil";
 
 const birthday: SlashCommand = {
     data: new SlashCommandBuilder()
