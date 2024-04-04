@@ -11,7 +11,8 @@
     "build": "tsc",
     "watch": "tsc -w",
     "run:deploy": "pnpm build && pm2 start dist/index.js --name hbd",
-    "run:restart": "pm2 restart hbd"
+    "run:restart": "pm2 restart hbd",
+    "run:stop": "pm2 stop hbd"
   },
   "keywords": [
     "mongodb",
