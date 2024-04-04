@@ -6,7 +6,7 @@ a discord bot for user's birthdays, horoscopes, and wishing user's a happy birth
 #### 🔗 [INVITE](https://discord.com/oauth2/authorize?client_id=1211045842362966077&permissions=2415921152&scope=bot)
 #### 🌐 [DISCORD SERVER](https://discord.gg/n65AVpTFNf)
 #### 📖 [WIKI](https://github.com/clxrityy/hbd/wiki)
-- [Getting Started](https://github.com/clxrityy/hbd/wiki/Getting-Started)
+- [Getting Started](https://github.com/clxrityy/hbd/wiki/Getting-Started) — Information about configuring the bot for your guild
 
 ---
 
