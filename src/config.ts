@@ -3,12 +3,6 @@ import { Config } from "./misc/types";
 
 const config: Config = {
     client: client,
-    // openai: {
-    //     model: "gpt-4-turbo-preview",
-    //     systemRoleContent: "Respond to the given prompt in a useful way.",
-    //     temperature: 0.89,
-    //     presence_penalty: 0,
-    // },
     colors: {
         error: "#e35f58",
         success: "#55cf6f",
@@ -32,6 +26,13 @@ const config: Config = {
     developerIds: ['244304391815823361', '706976863096143936'],
     options: {
         startYear: 2024
+    },
+    openai: {
+        model: "gpt-3.5-turbo",
+        systemRoleContent: "Your job is to provide a horoscope for a user based on their birthday/zodiac sign and the current date. Tell them what they can expect for the day in a spiritual sense. (If possible, provide evidence based on how the stars are aligned). Keep your response to below 500 characters. Do not make up any information. If needed, you can reference this site: https://www.horoscope.com/us/index.aspx",
+        temperature: 0.35,
+        presence_penalty: 1,
+        n: 1
     }
 }
 

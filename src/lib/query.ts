@@ -1,5 +1,6 @@
 import { QueryPrompt } from "../misc/types";
 import openai from "./openai";
+import config from "../config";
 
 function sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -22,18 +23,21 @@ export default async function query(prompt: QueryPrompt) {
 
     try {
         const res = await openai.chat.completions.create({
-            model: "gpt-3.5-turbo",
+            model: config.openai.model,
             messages: [
                 {
                     role: "system",
-                    content: "Your job is to provide a horoscope for a user based on their birthday/zodiac sign and the current date. Tell them what they can expect for the day in a spiritual sense. (If possible, provide evidence based on how the stars are aligned). Keep your response to below 500 characters. Do not make up any information. If needed, you can reference this site: https://www.horoscope.com/us/index.aspx"
+                    content: config.openai.systemRoleContent
                 },
                 {
                     role: "user",
                     content: queryPrompt
                 },
             ],
-            temperature: 0.4,
+            temperature: config.openai.temperature,
+            presence_penalty: config.openai.presence_penalty,
+            user: prompt.userData.id,
+            n: config.openai.n
         })
             .then((res) => res.choices[0].message.content)
             .catch((err) => `**An error occurred:**\n\`\`\`${err}\`\`\``);

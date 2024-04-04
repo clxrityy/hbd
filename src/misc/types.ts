@@ -41,6 +41,7 @@ export type Config = {
         systemRoleContent: string;
         temperature: number;
         presence_penalty: number;
+        n: number;
     },
     colors?: {
         error?: string | ColorResolvable;
@@ -59,7 +60,7 @@ export type Config = {
     developerIds: string[],
     options?: {
         startYear?: number
-    }
+    },
 }
 
 export type BirthdayData = {
