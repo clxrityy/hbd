@@ -8,7 +8,7 @@ a discord bot for user's birthdays, horoscopes, and wishing user's a happy birth
 #### 📖 [WIKI](https://github.com/clxrityy/hbd/wiki)
 - [Getting Started](https://github.com/clxrityy/hbd/wiki/Getting-Started) — Information about configuring the bot for your guild
 
-<img src="https://i.gyazo.com/ce02c65538c8ccf10fa89b14ec2ca563.gif" alt="banner" style="height:150px;width:375px;border-radius:30px" />
+<img src="/assets/banner-rounded.gif" alt="banner" style="height:150px;width:375px;border-radius:30px" />
 
 ---
 
