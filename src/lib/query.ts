@@ -26,19 +26,19 @@ export default async function query(prompt: QueryPrompt) {
             messages: [
                 {
                     role: "system",
-                    content: "Your job is to provide a horoscope for a user based on their birthday/zodiac sign and current date. Tell them what they can expect for the day in a spiritual sense. (If possible, provide evidence based on how the stars are aligned). Keep your response to below 500 characters."
+                    content: "Your job is to provide a horoscope for a user based on their birthday/zodiac sign and the current date. Tell them what they can expect for the day in a spiritual sense. (If possible, provide evidence based on how the stars are aligned). Keep your response to below 500 characters. Do not make up any information. If needed, you can reference this site: https://www.horoscope.com/us/index.aspx"
                 },
                 {
                     role: "user",
                     content: queryPrompt
                 },
             ],
-            temperature: 0.75,
+            temperature: 0.4,
         })
             .then((res) => res.choices[0].message.content)
             .catch((err) => `**An error occurred:**\n\`\`\`${err}\`\`\``);
         
-        await sleep(250);
+        await sleep(200);
     
         return res;
     } catch (e) {

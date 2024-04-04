@@ -1,6 +1,6 @@
 {
   "name": "hbd",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A Discord birthday bot",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,9 @@
     "start:prod": "node dist/index.js",
     "dev": "nodemon ./src/index.ts",
     "build": "tsc",
-    "watch": "tsc -w"
+    "watch": "tsc -w",
+    "run:deploy": "pnpm build && pm2 start dist/index.js --name hbd",
+    "run:restart": "pm2 restart hbd"
   },
   "keywords": [
     "mongodb",
