@@ -70,7 +70,7 @@ const horoscope: SlashCommand = {
         zodiacSign = getZodiacSign(birthday);
         let currentDate = Date.now();
         let date = new Date(currentDate);
-        const month = date.getMonth();
+        const month = date.getMonth() + 1;
         const day = date.getDay();
         const year = date.getFullYear();
 
