@@ -49,7 +49,7 @@ module.exports = async (client: Client, interaction: CommandInteraction) => {
     //     data.CommandName
     // ));
     // guild admin commands
-    if (!guildData) {
+    if (guildData) {
         if (config.commands.adminCommands.includes(commandObject.data.name) && guildData.AdminRole) {
             guild.roles.cache.forEach((role) => {
                 if (role.id === guildData.AdminRole) {
@@ -75,6 +75,8 @@ module.exports = async (client: Client, interaction: CommandInteraction) => {
     
                     await interaction.reply({ embeds: [embed], ephemeral: true });
                 }
+            } else {
+                await commandObject.run(client, interaction);
             }
         } else {
     
