@@ -54,15 +54,15 @@ module.exports = (client: Client) => {
                 user.roles.cache.forEach(async (role) => {
                     if (role === birthdayRole) {
                         try {
-                            return await user.roles.remove(birthdayRole);
+                            await user.roles.remove(birthdayRole).then(() => { 
+                                console.log(`[INFO] Removed birthday role from ${user.user.tag} in ${targetGuild.name}`.green);
+                            })
                         } catch (err) {
                             console.log(`[ERROR] Error removing birthday role!\n${err}`.red);
                         }
                     }
-                    return;
                 })
             }
-            return;
         }
     }
 

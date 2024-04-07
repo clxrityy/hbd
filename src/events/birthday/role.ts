@@ -43,7 +43,9 @@ module.exports = async (client: Client, ...args: string[]) => {
         return;
     });
     try {
-        return await user.roles.add(birthdayRole);
+        return await user.roles.add(birthdayRole).then(() => {
+            console.log(`[INFO] Added birthday role to ${user.user.tag} in ${targetGuild.name}`.green);
+        })
     } catch (err) {
         console.log(`[ERROR] Error adding birthday role!\n${err}`.red);
     }

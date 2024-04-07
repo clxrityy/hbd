@@ -37,25 +37,16 @@ export const checkIfAlreadyWished = async ({ guildId, targetUserId, userId, year
     return false;
 }
 
-export const getUserWishes = async (targetUserId: string, guildId: string, year?: number)  => {
+export const getUserWishes = async (targetUserId: string, guildId: string, year?: number) => {
 
-    let wishData = await Wish.find({ TargetUserID: targetUserId, GuildID: guildId, Year: year && year });
+    const date = new Date();
+    const yearNow = date.getFullYear();
 
-    if (!wishData) {
+    let wishData: WishData[] = await Wish.find({ TargetUserID: targetUserId, GuildID: guildId, Year: year ? year : yearNow });
+
+    if (wishData.length === 0) {
         return false;
     }
 
-    let wishes: WishData[] = [];
-
-    for (const wish of wishData) {
-        if (year) {
-            if (wish.Year === year) {
-                wishes.push({ guildId: wish.GuildID, targetUserId: wish.TargetUserID, userId: wish.UserID, year: wish.Year, message: wish.Message && wish.Message})
-            }
-        } else {
-            wishes.push({ guildId: wish.GuildID, targetUserId: wish.TargetUserID, userId: wish.UserID, year: wish.Year, message: wish.Message && wish.Message})
-        }
-    }
-
-    return wishes;
+    return wishData;
 }
