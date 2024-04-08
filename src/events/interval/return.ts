@@ -4,8 +4,9 @@ import Birthday from "../../models/Birthday";
 
 module.exports = (client: Client) => {
 
+    let date = new Date();
+
     const handleInterval = async (client: Client) => {
-        let date = new Date();
         let filter = {}
         const birthdays = await Birthday.find(filter);
 
