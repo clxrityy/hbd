@@ -1,10 +1,10 @@
 import { ColorResolvable, EmbedBuilder, SlashCommandBuilder, userMention } from "discord.js";
+import { SlashCommand } from "../../misc/types";
 import config from "../../config";
 import { checkIfAlreadyWished, checkIfBirthdayMember, getUserWishes } from "../../misc/bdayUtil";
-import { SlashCommand } from "../../misc/types";
 import Wish from "../../models/Wish";
 
-const date = new Date();
+const dateNow = new Date();
 
 const hbd: SlashCommand = {
     data: new SlashCommandBuilder()
@@ -38,7 +38,7 @@ const hbd: SlashCommand = {
                 .setDescription("View wishes from a specific year")
                 .setRequired(false)
                 .setMinValue(config.options.startYear)
-                .setMaxValue(date.getFullYear())
+                .setMaxValue(dateNow.getFullYear())
             )
         ).toJSON()
     ,
@@ -61,15 +61,30 @@ const hbd: SlashCommand = {
 
                 const isBirthday = await checkIfBirthdayMember(target.id, guildId);
 
+                if (target.id === user.id) {
+
+                    embed
+                        .setColor(config.colors.error as ColorResolvable)
+                        .setDescription("You can't wish yourself a happy birthday!")
+                    
+                    return await interaction.reply({ embeds: [embed], ephemeral: true });
+                }
+
                 if (isBirthday) {
+
                     if (typeof isBirthday === "string") {
-                        embed
-                            .setColor(config.colors.error as ColorResolvable)
+                        embed.setColor(config.colors.error as ColorResolvable)
                             .setDescription(isBirthday)
                         
                         return await interaction.reply({ embeds: [embed], ephemeral: true });
                     } else {
-                        const alreadyWished = await checkIfAlreadyWished({ guildId: guildId, targetUserId: target.id, userId: user.id, year: year });
+
+                        const alreadyWished = await checkIfAlreadyWished({
+                            guildId: guildId,
+                            targetUserId: target.id,
+                            userId: user.id,
+                            year: year
+                        });
 
                         if (alreadyWished) {
                             embed
@@ -78,7 +93,6 @@ const hbd: SlashCommand = {
                             
                             return await interaction.reply({ embeds: [embed], ephemeral: true });
                         } else {
-
                             const message = options.getString("birthday_message", false);
 
                             let wishData = new Wish({
@@ -86,160 +100,138 @@ const hbd: SlashCommand = {
                                 TargetUserID: target.id,
                                 UserID: user.id,
                                 Year: year,
-                                Message: message && message
+                                Message: message ? message : config.messages.happyBirthdayMessage
                             });
 
                             await wishData.save();
 
                             embed
                                 .setColor(config.colors.success as ColorResolvable)
-                                .setDescription(`✉️\n\n**Your wish to ${userMention(target.id)} has been sent!**\n*${message && message}*`)
-                                .setFooter({
-                                    text: `/hbd view`
-                                });
+                                .setDescription(`You've successfully wished ${userMention(target.id)} a happy birthday!`)
                             
                             return await interaction.reply({ embeds: [embed], ephemeral: true });
                         }
-
                     }
-
                 } else {
                     embed
                         .setColor(config.colors.error as ColorResolvable)
                         .setDescription("You can only send wishes to users on their birthday!")
                     
                     return await interaction.reply({ embeds: [embed], ephemeral: true });
-                }
+                };
             case "view":
-                const targetUser = options.getUser("target");
-                const targetYear = options.getNumber("year");
-
-                let wishes: string = "";
-                let wishCount: number = 0;
+                const targetUser = options.getUser("target", false);
+                const targetYear = options.getNumber("year", false);
 
                 if (!targetUser && !targetYear) {
+                    
                     let wishesArray = await getUserWishes(user.id, guildId);
 
                     if (!wishesArray) {
                         embed
-                            .setColor(config.colors.primary as ColorResolvable)
-                            .setDescription(`**Your birthday wishes**\n\n\`None\``);
-                        
-                        return await interaction.reply({ embeds: [embed], ephemeral: true });
-                    } else {
-
-                        let wishesMapped = wishesArray.map((wish) => (
-                            `${userMention(wish.userId)} — ${wish.message ? wish.message : config.messages.happyBirthdayMessage} | ${wish.year}`
-                        ));
-
-                        wishes = wishesMapped.join("\n");
-                        wishCount = wishesArray.length;
-
-                        embed
-                            .setColor(config.colors.primary as ColorResolvable)
-                            .setDescription(`**Your birthday wishes**\n\n${wishes}`)
-                            .setFooter({
-                                text: `Wishes: ${wishCount}`
-                            });
+                            .setColor(config.colors.error as ColorResolvable)
+                            .setDescription(`**Your birthday wishes**:\n\n\`None\``);
                         
                         return await interaction.reply({ embeds: [embed], ephemeral: true });
                     }
+
+                    let wishesMapped = wishesArray.map((wish, index) => {
+                        return `- ${index + 1}: ${userMention(wish.userId)} — ${wish.message ? wish.message : config.messages.happyBirthdayMessage} | **${wish.year}**`;
+                    });
+
+                    let wishes = wishesMapped.join("\n");
+                    let wishCount = wishesArray.length;
+
+                    embed
+                        .setColor(config.colors.primary as ColorResolvable)
+                        .setDescription(`**Your birthday wishes**:\n\n${wishes}}`)
+                        .setFooter({
+                            text: `Total wishes: ${wishCount > 0 ? wishCount : "None"}`
+                        });
+                    
+                    return await interaction.reply({ embeds: [embed], ephemeral: true });
+
                 } else if (targetUser || targetYear) {
 
-                    if (targetYear && targetUser) {
+                    if (targetUser && targetYear) {
                         let wishesArray = await getUserWishes(targetUser.id, guildId, targetYear);
 
                         if (!wishesArray) {
                             embed
-                                .setColor(config.colors.primary as ColorResolvable)
-                                .setDescription(`**${userMention(targetUser.id)}'s wishes** (${targetYear})\n\n\`None\``)
-                                .setFooter({
-                                    text: "/hbd wish"
-                                });
-
-                            return await interaction.reply({ embeds: [embed], ephemeral: true });
-                        } else {
-
-                            let wishesMapped = wishesArray.map((wish) => (
-                                `${userMention(wish.userId)} — ${wish.message ? wish.message : config.messages.happyBirthdayMessage}`
-                            ));
-
-                            wishes = wishesMapped.join("\n");
-
-                            wishCount = wishesArray.length;
-
-                            embed
-                                .setColor(config.colors.primary as ColorResolvable)
-                                .setDescription(`**${userMention(targetUser.id)}'s wishes** (${targetYear})\n\n${wishes}`)
-                                .setFooter({
-                                    text: `Wishes: ${wishCount}`
-                                });
+                                .setColor(config.colors.error as ColorResolvable)
+                                .setDescription(`**${userMention(targetUser.id)}'s birthday wishes**:\n\n\`None\``);
                             
                             return await interaction.reply({ embeds: [embed], ephemeral: true });
                         }
-                    } else if (targetUser) {
+
+                        let wishesMapped = wishesArray.map((wish, index) => {
+                            return `- ${index + 1}: ${userMention(wish.userId)} — ${wish.message ? wish.message : config.messages.happyBirthdayMessage} | **${wish.year}**`;
+                        });
+
+                        let wishes = wishesMapped.join("\n");
+                        let wishCount = wishesArray.length;
+
+                        embed
+                            .setColor(config.colors.primary as ColorResolvable)
+                            .setDescription(`**${userMention(targetUser.id)}'s birthday wishes**:\n\n${wishes}}`)
+                            .setFooter({
+                                text: `Total wishes: ${wishCount > 0 ? wishCount : "None"}`
+                            });
+                        
+                        return await interaction.reply({ embeds: [embed], ephemeral: true });
+                    } else if (targetUser && !targetYear) {
 
                         let wishesArray = await getUserWishes(targetUser.id, guildId);
 
                         if (!wishesArray) {
                             embed
-                                .setColor(config.colors.primary as ColorResolvable)
-                                .setDescription(`**${userMention(targetUser.id)}'s wishes**\n\n\`None\``)
-                                .setFooter({
-                                    text: "/hbd wish"
-                                });
-
-                            return await interaction.reply({ embeds: [embed], ephemeral: true });
-                        } else {
-
-                            wishCount = wishesArray.length;
-
-                            let wishesMapped = wishesArray.map((wish) => (
-                                `${userMention(wish.userId)} — ${wish.message ? wish.message : config.messages.happyBirthdayMessage} — ${wish.year}`
-                            ))
-
-                            wishes = wishesMapped.join("\n");
-
-                            embed
-                                .setColor(config.colors.primary as ColorResolvable)
-                                .setDescription(`**${userMention(targetUser.id)}'s wishes** (${targetYear})\n\n${wishes}`)
-                                .setFooter({
-                                    text: `Wishes: ${wishCount}`
-                                });
+                                .setColor(config.colors.error as ColorResolvable)
+                                .setDescription(`**${userMention(targetUser.id)}'s birthday wishes**:\n\n\`None\``);
                             
                             return await interaction.reply({ embeds: [embed], ephemeral: true });
                         }
-                    } else {
 
+                        let wishesMapped = wishesArray.map((wish, index) => {
+                            return `- ${index + 1}: ${userMention(wish.userId)} — ${wish.message ? wish.message : config.messages.happyBirthdayMessage} ${wish.year ? wish.year : year}`;
+                        });
+
+                        let wishes = wishesMapped.join("\n");
+                        let wishCount = wishesArray.length;
+
+                        embed
+                            .setColor(config.colors.primary as ColorResolvable)
+                            .setDescription(`**${userMention(targetUser.id)}'s birthday wishes**:\n\n${wishes}`)
+                            .setFooter({
+                                text: `Total wishes: ${wishCount > 0 ? wishCount : "None"}`
+                            });
+                        
+                        return await interaction.reply({ embeds: [embed], ephemeral: true });
+                    } else {
                         let wishesArray = await getUserWishes(user.id, guildId, targetYear);
 
                         if (!wishesArray) {
                             embed
-                                .setColor(config.colors.primary as ColorResolvable)
-                                .setDescription(`**Your wishes** (${targetYear})\n\n\`None\``)
-                                .setFooter({
-                                    text: "/hbd wish"
-                                });
-
-                            return await interaction.reply({ embeds: [embed], ephemeral: true });
-                        } else {
-
-                            let wishesMapped = wishesArray.map((wish) => (
-                                `${userMention(wish.userId)} — ${wish.message ? wish.message : config.messages.happyBirthdayMessage}`
-                            ));
-
-                            wishes = wishesMapped.join("\n");
-                            wishCount = wishesArray.length;
-
-                            embed
-                                .setColor(config.colors.primary as ColorResolvable)
-                                .setDescription(`**Your wishes** (${targetYear})\n\n${wishes}`)
-                                .setFooter({
-                                    text: `Wishes: ${wishCount}`
-                                });
+                                .setColor(config.colors.error as ColorResolvable)
+                                .setDescription(`**Your birthday wishes for ${targetYear}**:\n\n\`None\``);
                             
                             return await interaction.reply({ embeds: [embed], ephemeral: true });
                         }
+
+                        let wishesMapped = wishesArray.map((wish, index) => {
+                            return `- ${index + 1}: ${userMention(wish.userId)} — ${wish.message ? wish.message : config.messages.happyBirthdayMessage} | **${wish.year}**`;
+                        });
+
+                        let wishes = wishesMapped.join("\n");
+                        let wishCount = wishesArray.length;
+
+                        embed
+                            .setColor(config.colors.primary as ColorResolvable)
+                            .setDescription(`**Your birthday wishes for ${targetYear}**:\n\n${wishes}}`)
+                            .setFooter({
+                                text: `Total wishes: ${wishCount > 0 ? wishCount : "None"}`
+                            });
+                        
+                        return await interaction.reply({ embeds: [embed], ephemeral: true });
                     }
                 }
         }

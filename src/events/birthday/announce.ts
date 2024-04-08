@@ -6,7 +6,7 @@ import Config from "../../config";
 module.exports = async (client: Client, ...args: string[]) => {
 
     const userId = args[0][0];
-    
+    const guildId = args[0][1];
 
     const birthdayData = await Birthday.findOne({ UserID: userId });
 
@@ -14,19 +14,22 @@ module.exports = async (client: Client, ...args: string[]) => {
         return;
     }
 
-    const guildId = birthdayData.GuildID;
-
     const guildData = await Guild.findOne({ GuildID: guildId });
-
-    if (!guildData) {
-        return;
-    }
     let channel: TextChannel;
 
+    if (!guildData) {
+        channel = await (await client.guilds.fetch(guildId)).channels.fetch()[0] as TextChannel;
+    }
+    
     const announceChannelId = guildData.AnnouncementChannel;
 
     if (!announceChannelId) {
+        
+        
         channel = await (await client.guilds.fetch(guildId)).channels.fetch()[0] as TextChannel;
+
+    } else {
+        channel = await (await client.guilds.fetch(guildId)).channels.fetch(announceChannelId) as TextChannel;
     }
 
     let message = guildData.AnnouncementMessage;
@@ -37,12 +40,16 @@ module.exports = async (client: Client, ...args: string[]) => {
         .setColor(Config.colors.primary as ColorResolvable)
         .setFooter(Config.messages.happyBirthdayAnnouncement.footer);
 
-    channel = await (await (await client.guilds.fetch(guildId)).channels.fetch(announceChannelId)).fetch() as TextChannel;
-
-    if (!message) {
-        return await channel.send({ embeds: [embed] });
-    } else {
-        message = message.replace("{{user}}", `${userMention(userId)}`);
-        return await channel.send({ content: message });
+    try {
+        if (!message) {
+            await channel.send({ embeds: [embed] });
+            console.log(`[INFO] Sent birthday announcement to ${channel.guild.name}`.green);
+        } else {
+            message = message.replace("{{user}}", `${userMention(userId)}`);
+            await channel.send({ content: message });
+            console.log(`[INFO] Sent birthday announcement to ${channel.guild.name}`.green);
+        }
+    } catch (error) {
+        console.error(`[ERROR] Failed to send birthday announcement: ${error}`.red);
     }
 }

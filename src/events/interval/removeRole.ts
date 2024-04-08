@@ -54,18 +54,17 @@ module.exports = (client: Client) => {
                 user.roles.cache.forEach(async (role) => {
                     if (role === birthdayRole) {
                         try {
-                            return await user.roles.remove(birthdayRole);
+                            await user.roles.remove(birthdayRole).then(() => { 
+                                console.log(`[INFO] Removed birthday role from ${user.user.tag} in ${targetGuild.name}`.green);
+                            })
                         } catch (err) {
                             console.log(`[ERROR] Error removing birthday role!\n${err}`.red);
                         }
                     }
-                    return;
                 })
             }
-            return;
         }
     }
-
-
-    return setInterval(async () => await handleInterval(client), 1000 * 60 * 60 * 24);
+    return setInterval(async () => await handleInterval(client), 1000 * 60 * 60 * 24); // change to 24 hr
+    // 1000 * 60 * 60 = 1 hr
 }

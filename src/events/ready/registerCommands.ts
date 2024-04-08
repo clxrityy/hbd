@@ -1,5 +1,5 @@
 import "colors";
-import { APIApplicationCommandOption, Client, } from "discord.js";
+import { Client } from "discord.js";
 import commandCompare from "../../utils/commandCompare";
 import { getApplicationCommands, getLocalCommands } from "../../utils/getCommands";
 
