@@ -24,7 +24,10 @@ module.exports = async (client: Client, ...args: string[]) => {
     const announceChannelId = guildData.AnnouncementChannel;
 
     if (!announceChannelId) {
+        
+        
         channel = await (await client.guilds.fetch(guildId)).channels.fetch()[0] as TextChannel;
+
     } else {
         channel = await (await client.guilds.fetch(guildId)).channels.fetch(announceChannelId) as TextChannel;
     }

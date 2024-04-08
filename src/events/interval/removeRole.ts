@@ -66,5 +66,6 @@ module.exports = (client: Client) => {
         }
     }
 
-    return setInterval(async () => await handleInterval(client), 1000 * 60 * 60 * 24);
+    return setInterval(async () => await handleInterval(client), 1000 * 60 * 60 * 24); // change to 24 hr
+    // 1000 * 60 * 60 = 1 hr
 }

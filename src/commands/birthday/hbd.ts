@@ -192,7 +192,7 @@ const hbd: SlashCommand = {
                         }
 
                         let wishesMapped = wishesArray.map((wish, index) => {
-                            return `- ${index + 1}: ${userMention(wish.userId)} — ${wish.message ? wish.message : config.messages.happyBirthdayMessage} ${wish.year ? wish.year : ""}`;
+                            return `- ${index + 1}: ${userMention(wish.userId)} — ${wish.message ? wish.message : config.messages.happyBirthdayMessage} ${wish.year ? wish.year : year}`;
                         });
 
                         let wishes = wishesMapped.join("\n");
@@ -200,7 +200,7 @@ const hbd: SlashCommand = {
 
                         embed
                             .setColor(config.colors.primary as ColorResolvable)
-                            .setDescription(`**${userMention(targetUser.id)}'s birthday wishes**:\n\n${wishes}}`)
+                            .setDescription(`**${userMention(targetUser.id)}'s birthday wishes**:\n\n${wishes}`)
                             .setFooter({
                                 text: `Total wishes: ${wishCount > 0 ? wishCount : "None"}`
                             });
