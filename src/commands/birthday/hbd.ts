@@ -173,7 +173,7 @@ const hbd: SlashCommand = {
 
                         embed
                             .setColor(config.colors.primary as ColorResolvable)
-                            .setDescription(`**${userMention(targetUser.id)}'s birthday wishes**:\n\n${wishes}}`)
+                            .setDescription(`**${userMention(targetUser.id)}'s birthday wishes**:\n\n${wishes}`)
                             .setFooter({
                                 text: `Total wishes: ${wishCount > 0 ? wishCount : "None"}`
                             });
