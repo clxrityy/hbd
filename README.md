@@ -23,14 +23,15 @@ a discord bot for user's birthdays, horoscopes, and wishing user's a happy birth
   - user's birthdays
   - birthday wishes
 
-- when the bot logs in, the [`interval`](./src/events/interval) event is emitted:
+- when the bot logs in, the [`time`](./src/events/time) event is emitted:
 
 ```ts
-client.login(process.env.BOT_TOKEN!).then(() => client.emit("interval"));
+client.login(process.env.BOT_TOKEN!).then(() => client.emit("time"));
 ```
 
-- which returns an interval that runs once a day and checks for birthdays
-  - if there's a birthday present, the `birthday` event is emitted with the designated user id
+- which checks the time, if it is midnight, the [`interval`](./src/events/interval) is emitted
+  - this returns an interval that runs every **24** hrs and checks for birthdays
+  - if there's a birthday present, the `birthday` event is emitted with the designated user & guild ID
 
 ```ts
 module.exports = (client: Client) => {
@@ -45,9 +46,9 @@ module.exports = (client: Client) => {
 
     for (const birthday of birthdays) {
       if (birthday.Birthday === dateParsed) {
-        client.emit("birthday", birthday.UserID);
+        client.emit("birthday", [birthday.UserID, birthday.GuildID]);
       } else {
-        return;
+        //
       }
     }
   };
