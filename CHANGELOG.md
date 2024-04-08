@@ -1,5 +1,12 @@
 # hbd
 
+## 1.2.1
+
+### Patch Changes
+
+- cff34a4: fixed functionality of all "celebration" features (role, announcement)
+- 807a93b: set up gituser
+
 ## v1.2.0
 
 ### Major Changes
