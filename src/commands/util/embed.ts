@@ -60,7 +60,7 @@ const embed: SlashCommand = {
         const color = options.getString("color");
         const content = options.getString("content");
 
-        let channel: TextChannel = options.getChannel("channel");
+        let channel: TextChannel = options.getChannel("channel") as TextChannel;
 
         const embed = new EmbedBuilder();
 
