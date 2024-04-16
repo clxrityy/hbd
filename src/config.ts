@@ -20,8 +20,8 @@ const config: Config = {
         happyBirthdayMessage: "wished you a happy birthday!"
     },
     commands: {
-        adminCommands: ["config", "edit"],
-        devCommands: ["bot"]
+        adminCommands: ["config", "edit", "embed"],
+        devCommands: ["bot", "emit"]
     },
     developerIds: ['244304391815823361', '706976863096143936'],
     options: {

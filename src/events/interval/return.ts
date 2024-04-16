@@ -1,13 +1,14 @@
 import { Client } from "discord.js";
 import Birthday from "../../models/Birthday";
+import { getDate } from "../../utils/getDate";
 
 
 module.exports = (client: Client) => {
 
-    let date = new Date();
 
-    const handleInterval = async (client: Client) => {
-        let filter = {}
+    const handleInterval = async (client: Client, date: Date) => {
+        let filter = {};
+
         const birthdays = await Birthday.find(filter);
 
         const dateString = date.toLocaleDateString();
@@ -22,6 +23,6 @@ module.exports = (client: Client) => {
         }
     }
 
-    return setInterval(async () => await handleInterval(client), 1000 * 60 * 60 * 24); // change to 24 hr
+    return setInterval(async () => await handleInterval(client, getDate()), 1000 * 60 * 60 * 24); // change to 24 hr
     // 1000 * 60 * 60 = 1 hr
 }
