@@ -1,5 +1,16 @@
 # hbd
 
+## 1.3.0
+
+### Minor Changes
+
+- b4cbb0f: added "emit" command for developers to manually emit an event
+
+### Patch Changes
+
+- 49e7f5d: make embed an admin command
+- 128d581: Fixed the interval so it fetches a new date every time
+
 ## 1.2.1
 
 ### Patch Changes
