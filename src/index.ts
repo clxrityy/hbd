@@ -18,8 +18,6 @@ export const cooldowns = new Map<string, number>(); // Cooldowns for commands
 
 eventHandler(client); // Register events
 
-client.login(process.env.BOT_TOKEN!).then(() => client.emit("time")) /* 
-    Login to the bot, then emit the "time" event (which will start return an interval that will only emit the "interval" event at midnight)
-*/
+client.login(process.env.BOT_TOKEN!)
 
 export default client;
