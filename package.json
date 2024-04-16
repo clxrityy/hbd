@@ -44,18 +44,18 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@types/node": "^20.12.5",
+    "@types/node": "^20.12.7",
     "ts-node": "^10.9.2",
     "tslib": "^2.6.2",
-    "typescript": "^5.4.4"
+    "typescript": "^5.4.5"
   },
   "dependencies": {
     "@changesets/cli": "^2.27.1",
     "colors": "^1.4.0",
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.5",
-    "mongoose": "^8.3.1",
+    "mongoose": "^8.3.2",
     "nodemon": "^3.1.0",
-    "openai": "^4.33.0"
+    "openai": "^4.36.0"
   }
 }
