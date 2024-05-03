@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const wishSchema = new Schema({
+export const wishSchema = new Schema({
     GuildID: String,
     TargetUserID: String,
     UserID: String,
