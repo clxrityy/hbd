@@ -42,7 +42,7 @@ export const getUserWishes = async (targetUserId: string, guildId: string, year?
     const date = new Date();
     const yearNow = date.getFullYear();
 
-    let wishData: WishData[] = await Wish.find({ TargetUserID: targetUserId, GuildID: guildId, Year: year ? year : yearNow });
+    let wishData = (await Wish.find({ TargetUserID: targetUserId, GuildID: guildId, Year: year ? year : yearNow }));
 
     if (wishData.length === 0) {
         return false;
