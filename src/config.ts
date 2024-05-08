@@ -5,6 +5,7 @@ const config: Config = {
     client: client,
     colors: {
         error: "#e35f58",
+        warning: "#f7b02d",
         success: "#55cf6f",
         primary: "#ffffff",
     },

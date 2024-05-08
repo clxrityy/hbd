@@ -502,7 +502,7 @@ const config: SlashCommand = {
                             const announcementMsgParsed = announcementMsg.replace("{{user}}", "`{user}`")
 
                             embed
-                                .setDescription(`Successfully updated the announcement message!\n\n*${announcementMsgParsed}*`)
+                                .setDescription(`Successfully updated the announcement message!\n\n> *${announcementMsgParsed}*`)
                                 .setColor(Config.colors.success as ColorResolvable)
                                 .setFooter({
                                     text: "/config view",

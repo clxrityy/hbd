@@ -45,6 +45,7 @@ export type Config = {
     },
     colors?: {
         error?: string | ColorResolvable;
+        warning?: string | ColorResolvable;
         success?: string | ColorResolvable;
         primary?: string | ColorResolvable;
         secondary?: string | ColorResolvable;

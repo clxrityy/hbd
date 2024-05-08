@@ -13,16 +13,26 @@ module.exports = (client: Client) => {
 
         const dateString = date.toLocaleDateString();
         const dateArray = dateString.split("/");
-        const dateParsed = dateArray[0] + `/` + dateArray[1];
+
+        const day = Number(dateArray[1]);
+
+        const dateParsed = dateArray[0] + `/` + `${day - 1}`;
 
         for (const birthday of birthdays) {
 
             if (birthday.Birthday === dateParsed) {
-                client.emit("birthday", [birthday.UserID, birthday.GuildID]);
+                if (date.getHours() === 0)
+                    client.emit("birthday", [birthday.UserID, birthday.GuildID]);
+                else {
+                    const timeUntilMidnight = (24 - date.getHours()) * 60 * 60 * 1000;
+                    setTimeout(() => {
+                        client.emit("birthday", [birthday.UserID, birthday.GuildID]);
+                    }, timeUntilMidnight);
+                }
             }
         }
     }
 
-    return setInterval(async () => await handleInterval(client, getDate()), 1000 * 60 * 60 * 24);
+    return setInterval(async () => await handleInterval(client, getDate()), 1000 * 60 * 60 * 13);
     // 1000 * 60 * 60 = 1 hr
 }
