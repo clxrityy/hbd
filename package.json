@@ -54,7 +54,7 @@
     "colors": "^1.4.0",
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.5",
-    "mongoose": "^8.3.3",
+    "mongoose": "^8.4.0",
     "nodemon": "^3.1.0",
     "openai": "^4.40.2"
   }
