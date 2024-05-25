@@ -1,6 +1,6 @@
 import "colors";
 import { ColorResolvable, EmbedBuilder, SlashCommandBuilder } from "discord.js";
-import { default as Config, default as config } from "../../../config";
+import { default as Config, default as config } from "../../config";
 import { SlashCommand } from "../../misc/types";
 
 const bot: SlashCommand = {

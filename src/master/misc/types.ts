@@ -64,6 +64,10 @@ export type Config = {
     options?: {
         startYear?: number
     },
+    api: {
+        base_url: string;
+        redirect_uri: string;
+    }
 }
 
 export type BirthdayData = {

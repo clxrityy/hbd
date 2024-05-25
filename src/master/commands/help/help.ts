@@ -1,5 +1,5 @@
 import { ColorResolvable, EmbedBuilder, SlashCommandBuilder } from "discord.js";
-import config from "../../../config";
+import config from "../../config";
 import { SlashCommand } from "../../misc/types";
 
 const help: SlashCommand = {

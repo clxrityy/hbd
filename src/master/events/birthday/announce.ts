@@ -1,7 +1,7 @@
 import { Client, ColorResolvable, EmbedBuilder, TextChannel, userMention } from "discord.js";
-import Config from "../../../config";
 import Birthday from "../../../models/Birthday";
 import Guild from "../../../models/Guild";
+import Config from "../../config";
 
 module.exports = async (client: Client, ...args: string[]) => {
 

@@ -1,7 +1,7 @@
 import "colors";
 import { ColorResolvable, EmbedBuilder, SlashCommandBuilder, userMention } from "discord.js";
-import config from "../../../config";
 import Birthday from "../../../models/Birthday";
+import config from "../../config";
 import { SlashCommand } from "../../misc/types";
 
 const edit: SlashCommand = {

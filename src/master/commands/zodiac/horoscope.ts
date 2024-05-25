@@ -1,8 +1,8 @@
 import "colors";
 import { ColorResolvable, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { cooldowns } from "../../..";
-import config from "../../../config";
 import Birthday from "../../../models/Birthday";
+import config from "../../config";
 import query from "../../lib/query";
 import { getZodiacSign } from "../../misc/signs";
 import { QueryPrompt, Sign, SlashCommand } from "../../misc/types";

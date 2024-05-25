@@ -1,7 +1,7 @@
 import "colors";
 import { Client, ColorResolvable, CommandInteraction, EmbedBuilder, PermissionsBitField } from "discord.js";
-import config from "../../../config";
 import Guild from "../../../models/Guild";
+import config from "../../config";
 import { SlashCommand } from "../../misc/types";
 import { getLocalCommands } from "../../utils/getCommands";
 

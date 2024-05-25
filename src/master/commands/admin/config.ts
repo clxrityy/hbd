@@ -1,7 +1,7 @@
 import "colors";
 import { APIRole, ColorResolvable, EmbedBuilder, Role, SlashCommandBuilder, TextChannel } from "discord.js";
-import Config from "../../../config";
 import Guild from "../../../models/Guild";
+import Config from "../../config";
 import { SlashCommand } from "../../misc/types";
 
 const config: SlashCommand = {

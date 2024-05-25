@@ -1,6 +1,6 @@
 import { ColorResolvable, EmbedBuilder, SlashCommandBuilder } from "discord.js";
-import config from "../../../config";
 import Birthday from "../../../models/Birthday";
+import config from "../../config";
 import { getZodiacSign } from "../../misc/signs";
 import { Sign, SlashCommand } from "../../misc/types";
 

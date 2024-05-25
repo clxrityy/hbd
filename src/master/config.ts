@@ -1,5 +1,5 @@
-import client from ".";
-import { Config } from "./master/misc/types";
+import client from "..";
+import { Config } from "./misc/types";
 
 const config: Config = {
     client: client,
@@ -36,6 +36,10 @@ const config: Config = {
         n: 1,
         imageModel: "dall-e-2",
         defaultImagePrompt: ""
+    },
+    api: {
+        base_url: "https://discord/api/v10",
+        redirect_uri: "http://localhost:3001/api/auth/discord/redirect"
     }
 }
 

@@ -1,6 +1,6 @@
 import { ColorResolvable, EmbedBuilder, SlashCommandBuilder, userMention } from "discord.js";
-import config from "../../../config";
 import Wish from "../../../models/Wish";
+import config from "../../config";
 import { checkIfAlreadyWished, checkIfBirthdayMember, getUserWishes } from "../../misc/bdayUtil";
 import { SlashCommand } from "../../misc/types";
 

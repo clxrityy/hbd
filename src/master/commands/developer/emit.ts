@@ -1,6 +1,6 @@
 import { ColorResolvable, EmbedBuilder, Guild, GuildMember, SlashCommandBuilder, userMention } from "discord.js";
-import config from "../../../config";
 import GuildModel from "../../../models/Guild";
+import config from "../../config";
 import { SlashCommand } from "../../misc/types";
 
 const emit: SlashCommand = {
