@@ -1,6 +1,6 @@
-import { config } from "dotenv";
 import { Client, GatewayIntentBits } from "discord.js";
-import eventHandler from "./handlers";
+import { config } from "dotenv";
+import eventHandler from "./master/handlers";
 
 config() // Load environment variables
 

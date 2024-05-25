@@ -1,5 +1,5 @@
 import client from ".";
-import { Config } from "./misc/types";
+import { Config } from "./master/misc/types";
 
 const config: Config = {
     client: client,
@@ -33,7 +33,9 @@ const config: Config = {
         systemRoleContent: "Please provide a horoscope for a user based on their birthday/zodiac sign and the current date. Tell them what they can expect for the day in a spiritual sense. (If possible, provide evidence based on how the stars are aligned). Keep your response to below 500 characters. Do not make up any information that doesn't make sense. If needed, you can reference this site: https://www.horoscope.com/us/index.aspx",
         temperature: 0.35,
         presence_penalty: 1,
-        n: 1
+        n: 1,
+        imageModel: "dall-e-2",
+        defaultImagePrompt: ""
     }
 }
 
