@@ -44,7 +44,9 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.21",
     "@types/node": "^20.12.12",
     "ts-node": "^10.9.2",
     "tslib": "^2.6.2",
@@ -54,11 +56,10 @@
     "@changesets/cli": "^2.27.3",
     "axios": "^1.7.2",
     "colors": "^1.4.0",
-    "connect-mongo": "^5.1.0",
-    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "discord.js": "^14.15.2",
     "dotenv": "^16.4.5",
+    "express": "^4.19.2",
     "mongoose": "^8.4.0",
     "nodemon": "^3.1.1",
     "openai": "^4.47.1"
