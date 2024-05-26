@@ -15,7 +15,7 @@ const config: Config = {
             color: "#71b8e1",
             footer: {
                 text: "/birthday set",
-                iconURL: client.user.avatarURL()
+                iconURL: ""
             }
         },
         happyBirthdayMessage: "wished you a happy birthday!"
@@ -38,7 +38,7 @@ const config: Config = {
         defaultImagePrompt: ""
     },
     api: {
-        base_url: "https://discord/api/v10",
+        endpoint: "https://discord.com/api/v10",
         redirect_uri: "http://localhost:3001/api/auth/discord/redirect"
     }
 }

@@ -13,7 +13,10 @@
     "watch": "tsc -w",
     "run:deploy": "export NODE_ENV=production && pnpm build && pm2 start dist/index.js --name hbd",
     "run:restart": "export NODE_ENV=production && pnpm build && pm2 restart hbd",
-    "run:stop": "pm2 stop hbd"
+    "run:stop": "pm2 stop hbd",
+    "run:delete": "pm2 delete hbd",
+    "logs": "pm2 logs hbd --lines 750",
+    "changeset": "npx changeset"
   },
   "keywords": [
     "mongodb",
@@ -44,8 +47,6 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@types/axios": "^0.14.0",
-    "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.21",
     "@types/node": "^20.12.12",
     "ts-node": "^10.9.2",

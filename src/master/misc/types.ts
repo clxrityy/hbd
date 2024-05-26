@@ -65,7 +65,7 @@ export type Config = {
         startYear?: number
     },
     api: {
-        base_url: string;
+        endpoint: string;
         redirect_uri: string;
     }
 }
