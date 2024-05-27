@@ -1,4 +1,5 @@
 import express from "express";
+import session from "express-session";
 import "colors";
 import router from "./routes";
 
@@ -6,6 +7,18 @@ const api = async () => {
 
     const PORT = process.env.PORT || 3001;
     const app = express();
+
+    app.use(session({
+        secret: process.env.SESSION_SECRET,
+        name: "OAUTH2_SESSION_ID",
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            maxAge: 3600000 * 24,
+        }
+    }));
+
+    
 
     app.use("/api", router)
 

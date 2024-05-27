@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
 import config from "../../../master/config";
 import { createUser, exchangeAccessCodeForCredentials, getUserDetails } from "../../services/auth";
+import { serializeSession } from "../../utils/session";
+import AuthUser from "../../../models/AuthUser";
+import { AuthUserDocument } from "../../utils/types";
 
 export async function authDiscordRedirectController(req: Request, res: Response) { 
     const { code } = req.query;
@@ -22,6 +25,8 @@ export async function authDiscordRedirectController(req: Request, res: Response)
 
             const newAuthUser = await createUser({ id: id, accessToken: access_token, refreshToken: refresh_token });
 
+            await serializeSession(req, newAuthUser as AuthUserDocument)
+
             res.send(newAuthUser);
         } catch (err) {
             console.log(`[ERROR] API Error: ${err}`.red);
@@ -31,6 +36,7 @@ export async function authDiscordRedirectController(req: Request, res: Response)
 }
 
 export async function getAuthenticatedUserController(req: Request, res: Response) {
+
     res.sendStatus(200);
 }
 

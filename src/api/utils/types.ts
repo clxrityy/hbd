@@ -1,3 +1,6 @@
+import AuthUser from "../../models/AuthUser";
+import { Document } from "mongoose";
+
 export enum DISCORD_API_ROUTES {
     OAUTH2_TOKEN = "https://discord.com/api/oauth2/token",
     OAUTH2_USER = "https://discord.com/api/users/@me",
@@ -40,3 +43,17 @@ export type CreateUserParams = {
     accessToken: string;
     refreshToken: string;
 }
+
+declare module "express-session" {
+    interface SessionData {
+        user?: typeof AuthUser
+    }
+}
+
+declare module "express" {
+    interface Request {
+        user?: typeof AuthUser
+    }
+}
+
+export type AuthUserDocument = typeof AuthUser & Document;
