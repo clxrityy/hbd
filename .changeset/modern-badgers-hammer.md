@@ -1,0 +1,5 @@
+---
+"hbd": minor
+---
+
+serialize session
