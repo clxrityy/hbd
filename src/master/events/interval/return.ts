@@ -21,14 +21,15 @@ module.exports = (client: Client) => {
         for (const birthday of birthdays) {
 
             if (birthday.Birthday === dateParsed) {
-                if (date.getHours() === 0)
-                    client.emit("birthday", [birthday.UserID, birthday.GuildID]);
-                else {
-                    const timeUntilMidnight = (24 - date.getHours()) * 60 * 60 * 1000;
-                    setTimeout(() => {
-                        client.emit("birthday", [birthday.UserID, birthday.GuildID]);
-                    }, timeUntilMidnight);
-                }
+                // if (date.getHours() === 0)
+                //     client.emit("birthday", [birthday.UserID, birthday.GuildID]);
+                // else {
+                //     const timeUntilMidnight = (24 - date.getHours()) * 60 * 60 * 1000;
+                //     setTimeout(() => {
+                //         client.emit("birthday", [birthday.UserID, birthday.GuildID]);
+                //     }, timeUntilMidnight);
+                // }
+                client.emit("birthday", [birthday.UserID, birthday.GuildID]);
             }
         }
     }

@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
 import config from "../../../master/config";
-import { createUser, exchangeAccessCodeForCredentials, getUserDetails } from "../../services/auth";
+import { createUser, encryptTokens, exchangeAccessCodeForCredentials, getUserDetails, revokeToken } from "../../services/auth";
 import { serializeSession } from "../../utils/session";
-import AuthUser from "../../../models/AuthUser";
 import { AuthUserDocument } from "../../utils/types";
 
 export async function authDiscordRedirectController(req: Request, res: Response) { 
@@ -23,9 +22,12 @@ export async function authDiscordRedirectController(req: Request, res: Response)
             const { data: user } = await getUserDetails(access_token);
             const { id } = user;
 
-            const newAuthUser = await createUser({ id: id, accessToken: access_token, refreshToken: refresh_token });
+            const tokens = encryptTokens(access_token, refresh_token);
 
-            await serializeSession(req, newAuthUser as AuthUserDocument)
+            const newAuthUser = await createUser({ id: id, accessToken: tokens.accessToken, refreshToken: tokens.refreshToken });
+        
+
+            await serializeSession(req, newAuthUser as AuthUserDocument);
 
             res.send(newAuthUser);
         } catch (err) {
@@ -36,10 +38,19 @@ export async function authDiscordRedirectController(req: Request, res: Response)
 }
 
 export async function getAuthenticatedUserController(req: Request, res: Response) {
-
-    res.sendStatus(200);
+    
+    return req.user ? res.send(req.user) : res.sendStatus(401);
 }
 
 export async function revokeAccessTokenController(req: Request, res: Response) {
-    res.sendStatus(200);
+
+    if (!req.user) return res.sendStatus(401);
+
+    try {
+        await revokeToken(req.user.AccessToken);
+        res.sendStatus(200);
+    } catch (err) {
+        console.log(`[ERROR] API Error: ${err}`.red);
+        res.sendStatus(400);
+    }
 }

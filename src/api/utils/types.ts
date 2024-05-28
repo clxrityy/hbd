@@ -2,8 +2,9 @@ import AuthUser from "../../models/AuthUser";
 import { Document } from "mongoose";
 
 export enum DISCORD_API_ROUTES {
-    OAUTH2_TOKEN = "https://discord.com/api/oauth2/token",
-    OAUTH2_USER = "https://discord.com/api/users/@me",
+    OAUTH2_TOKEN = "https://discord.com/api/v10/oauth2/token",
+    OAUTH2_USER = "https://discord.com/api/v10/users/@me",
+    OAUTH2_TOKEN_REVOKE = "https://discord.com/api/v10/oauth2/token/revoke",
 }
 
 export type OAuthTokenExchangeRequestParams = {
@@ -46,14 +47,19 @@ export type CreateUserParams = {
 
 declare module "express-session" {
     interface SessionData {
-        user?: typeof AuthUser
+        user?: AuthUserDocument
     }
 }
 
 declare module "express" {
     interface Request {
-        user?: typeof AuthUser
+        user?: AuthUserDocument
     }
 }
 
-export type AuthUserDocument = typeof AuthUser & Document;
+export type AuthUserDocument = Document & typeof AuthUser & { AccessToken: string, RefreshToken: string, UserID: string };
+
+export type EncrypyedTokens = {
+    accessToken: string;
+    refreshToken: string;
+}

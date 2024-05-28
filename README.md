@@ -11,87 +11,134 @@ a discord bot for user's birthdays, horoscopes, and wishing user's a happy birth
 #### 📖 [WIKI](https://github.com/clxrityy/hbd/wiki)
 - [Getting Started](https://github.com/clxrityy/hbd/wiki/Getting-Started) — Information about configuring the bot for your guild
 
-<img src="/assets/banner-rounded.gif" alt="banner" style="height:150px;width:375px;border-radius:30px" />
+<img src="/assets/banner-rounded.gif" alt="banner" style="height:150px;width:375px;border-radius:24px" />
 
 ---
 
-# how it works
+# bot structure
 
-- data is stored in mongoose [models](https://mongoosejs.com/docs/models.html)
+- the **client** is defined and logged in through the main (`/src/index.ts`) file.
+  - the client is passed into the `eventHandler()` function
 
-  - guild settings (channels, roles)
-  - user's birthdays
-  - birthday wishes
+## `eventHandler()`
 
-- when the bot logs in, the [`time`](./src/events/time) event is emitted:
+- the event handler seeks through the `/events` folder, where every event has its folder. within each event, all of the files are executed
 
-```ts
-client.login(process.env.BOT_TOKEN!).then(() => client.emit("time"));
+```
+├── events
+│   ├── ready
+│   │   ├── dbConnect.ts
+│   │   ├── registerCommands.ts
+│   │   ├── ...
+├── ...
 ```
 
-- which checks the time, if it is midnight, the [`interval`](./src/events/interval) is emitted
-  - this returns an interval that runs every **24** hrs and checks for birthdays
-  - if there's a birthday present, the `birthday` event is emitted with the designated user & guild ID
+> for a more in-depth guide on how the structure of the bot is set up, you can read this guide: https://dev.to/clxrityy/how-to-create-a-dynamic-ai-discord-bot-with-typescript-3gjn
+
+---
+
+# OAUTH2 / API
+
+functionality for authenticated users to access endpoints to retrieve bot data (such as birthdays, wishes, etc.) is **yet to be implemented**. however, OAuth2 is fully functional through the use of API routes with [express](https://expressjs.com/).
+
+## routes
+
+- ##### `/api/auth/discord/redirect`
+  - retrieves the `access_token` & `refresh_token`, encrypts them, and serializes the session.
+- ##### `/api/auth/user/profile`
+  - returns the user object (if authorized)
+- #### `/api/auth/revoke`
+  - makes a post request to the discord API to revoke the access token (returns a `200` status if successful)
+
+---
+
+# configuration
+
+## `.env`
+
+```env
+# DISCORD
+BOT_TOKEN=
+CLIENT_ID=
+CLIENT_SECRET=
+PUBLIC_KEY=
+
+# OPENAI
+OPENAI_API_KEY=
+OPENAI_ORGANIZATION_ID=
+
+# MONGODB / MONGOOSE
+MONGO_URI=
+
+# GITHUB
+GITHUB_TOKEN=
+
+# ENVIRONMENT
+NODE_ENV=
+
+# API
+PORT=
+SESSION_SECRET=
+ENCRYPTION_KEY=
+```
+
+- retrieve **discord** environment variables
+  - https://discord.com/developers/applications
+- retrieve **openai** environment variables
+  - https://platform.openai.com/api-keys
+- retrieve **mongodb** environment variables
+  - https://cloud.mongodb.com/
+- retrieve **github** environment variable
+  - https://github.com/settings/tokens
+- your node environment should by default be set to `development`
+  - the `run:deploy` command automatically exports this to be production
+- your API environment variables can be set to anything you want, I recommend setting the port to `3001`
+  - (do not change your session secret or encryption key after setting it)
+
+## `config.ts`
 
 ```ts
-module.exports = (client: Client) => {
-  const handleInterval = async (client: Client) => {
-    let date = new Date();
-    let filter = {};
-    const birthdays = await Birthday.find(filter);
+import client from ".."; // import your client defined in /src/index.ts
 
-    const dateString = date.toLocaleDateString();
-    const dateArray = dateString.split("/");
-    const dateParsed = dateArray[0] + `/` + dateArray[1];
-
-    for (const birthday of birthdays) {
-      if (birthday.Birthday === dateParsed) {
-        client.emit("birthday", [birthday.UserID, birthday.GuildID]);
-      } else {
-        //
+const config = {
+  client: client, // set this to your client
+  colors: {
+    error: "", // the color of error embeds
+    warning: "", // the color of warning embeds
+    success: "", // the color of success embeds
+    primary: "" // primary color
+  },
+  messages: {
+    // the default birthday announcement (can be changed/configured by each guild)
+    happyBirthdayAnouncement: {
+      title: "", // embed title
+      color: "", // embed color
+      footer: {
+        text: "", // footer text
+        iconURL: "", // footer image
       }
-    }
-  };
-
-  return setInterval(
-    async () => await handleInterval(client),
-    1000 * 60 * 60 * 24
-  ); // 1000 * 60 * 60 = 1 hr
-};
-```
-
-### [birthday event](./src/events/birthday/)
-
-- fetches the channel to announce in and announces the birthday 
-    - 🔗 [`events/birthday/announce.ts`](./src/events/birthday/announce.ts)
-
-```ts
-//...
-const announceChannelId = guildData.AnnouncementChannel!;
-
-channel = await(
-  await(await client.guilds.fetch(guildId)).channels.fetch(announceChannelId)
-).fetch() as TextChannel;
-
-return await channel.send(/* ... */);
-```
-
-- fetches the birthday role (if it exists) and gives it to the user
-    - 🔗 [`events/birthday/role.ts`](./src/events/birthday/role.ts)
-
-```ts
-let birthdayRole: Role;
-
-targetGuild.roles.cache.forEach((role) => {
-  if (role.id === guildData.BirthdayRole) {
-    birthdayRole = role;
+    },
+    happyBirthdayMessage: "", // the default `/hbd wish` message (can be customized with the command)
+    commands: {
+      adminCommands: [], // title of commands only usable by admins
+      devCommands: [] // title of commands to only be used by bot developers
+    },
+    developerIds: [], // user id's of the developers
+    options: {
+      startYear: 2024, // the year you started the bot (to ensure no birthday wishes are registered to previous years)
+    },
+    openai: {
+      model: "", // the model for the AI to use. read more: https://platform.openai.com/docs/models (`gpt-3.5-turbo` recommended)
+      systemRoleContent: "", // the directions on how the AI should operate
+      temperature: 0.35, // values from 0 - 2, read more: https://platform.openai.com/docs/guides/text-generation/faq
+      presence_penalty: 1, // read more: https://platform.openai.com/docs/guides/text-generation/frequency-and-presence-penalties
+  },
+  api: {
+    endpoint: "https://discord.com/api/v10", // base discord API endpoint
+    redirect_uri: "http://localhost:3001/api/auth/discord/redirect", // should be the same uri specified in your developer application settings
   }
-  return;
-});
-
-try {
-    return await user.roles.add(birthdayRole);
-} catch (err) {
-    //...
 }
 ```
+
+---
+

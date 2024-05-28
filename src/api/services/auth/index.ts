@@ -1,8 +1,9 @@
 import axios from "axios";
-import { CreateUserParams, DISCORD_API_ROUTES, OAuth2CredentialsResponse, OAuth2UserResponse, OAuthTokenExchangeRequestParams } from "../../utils/types";
+import { CreateUserParams, DISCORD_API_ROUTES, EncrypyedTokens, OAuth2CredentialsResponse, OAuth2UserResponse, OAuthTokenExchangeRequestParams } from "../../utils/types";
 import { axiosConfig } from "../../utils/constants";
-import { authHeaders, buildOAuth2RequestPayload } from "../../utils/helpers";
+import { authHeaders, buildOAuth2RequestPayload, decryptToken, encryptToken } from "../../utils/helpers";
 import AuthUser from "../../../models/AuthUser";
+import url from "url";
 
 export async function exchangeAccessCodeForCredentials(data: OAuthTokenExchangeRequestParams) {
     const payload = buildOAuth2RequestPayload(data);
@@ -46,4 +47,23 @@ export async function createUser(params: CreateUserParams) {
         }
     }
     
+}
+
+export function encryptTokens(accessToken: string, refreshToken: string): EncrypyedTokens {
+    return {
+        accessToken: encryptToken(accessToken).toString(),
+        refreshToken: encryptToken(refreshToken).toString(),
+    }
+}
+
+export async function revokeToken(accessToken: string) {
+    const decrypedToken = decryptToken(accessToken);
+
+    const formData = new url.URLSearchParams({
+        client_id: process.env.CLIENT_ID,
+        client_secret: process.env.CLIENT_SECRET,
+        token: decrypedToken
+    });
+
+    return await axios.post(DISCORD_API_ROUTES.OAUTH2_TOKEN_REVOKE, formData.toString(), axiosConfig);
 }
