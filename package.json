@@ -50,7 +50,7 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@changesets/cli": "^2.27.1",
+    "@changesets/cli": "^2.27.5",
     "colors": "^1.4.0",
     "discord.js": "^14.14.1",
     "dotenv": "^16.4.5",
