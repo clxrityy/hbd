@@ -16,6 +16,7 @@
         "skipLibCheck": true,
         "skipDefaultLibCheck": true,
         "importHelpers": true,
+        "jsx": "react",
     },
     "include": [
         "src/**/*",
