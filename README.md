@@ -1,5 +1,10 @@
 # hbd <img src="/assets/avatar.gif" style="width:40px">
 
+# ARCHIVED!!!
+> **This is the old version of the hbd bot running on Node.js runtime. To view the new and improved (yet work in progress) version of this bot that is on edge runtime, click [here](https://github.com/clxrityy/mjanglin.com/tree/hbd).**
+
+---
+
 a discord bot for user's birthdays, horoscopes, and wishing user's a happy birthday.
 
 
