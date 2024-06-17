@@ -24,8 +24,8 @@ dependencies:
     specifier: ^3.1.0
     version: 3.1.0
   openai:
-    specifier: ^4.40.2
-    version: 4.40.2
+    specifier: ^4.51.0
+    version: 4.51.0
 
 devDependencies:
   '@types/node':
@@ -1867,8 +1867,8 @@ packages:
       object-keys: 1.1.1
     dev: false
 
-  /openai@4.40.2:
-    resolution: {integrity: sha512-r9AIaYQNHw8HGJpnny6Rcu/0moGUVqvpv0wTJfP0hKlk8ja5DVUMUCdPWEVfg7lxQMC+wIh+Qjp3onDIhVBemA==}
+  /openai@4.51.0:
+    resolution: {integrity: sha512-UKuWc3/qQyklqhHM8CbdXCv0Z0obap6T0ECdcO5oATQxAbKE5Ky3YCXFQY207z+eGG6ez4U9wvAcuMygxhmStg==}
     hasBin: true
     dependencies:
       '@types/node': 18.19.31
